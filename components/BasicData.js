@@ -10,8 +10,15 @@ const BasicDataComponent = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.basicDataText}>Coronavirus Cases</Text>
+      <Text style={styles.basicDataNumber}>{props.cases}</Text>
       <Text style={styles.basicDataText}>Deaths</Text>
+      <Text style={[styles.basicDataNumber, { color: "#FF5733" }]}>
+        {props.deaths}
+      </Text>
       <Text style={styles.basicDataText}>Recovered</Text>
+      <Text style={[styles.basicDataNumber, { color: "#35cd2b" }]}>
+        {props.cured}
+      </Text>
     </View>
   );
 };
@@ -31,7 +38,13 @@ const styles = StyleSheet.create({
   },
   basicDataText: {
     fontSize: wp("7%"),
-    fontWeight: "100",
+
+    fontFamily: "Roboto-Thin",
+  },
+  basicDataNumber: {
+    fontSize: wp("5%"),
+    padding: wp("1.25%"),
+    paddingBottom: hp("2.5%"),
   },
 });
 export default BasicDataComponent;

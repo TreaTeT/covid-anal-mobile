@@ -5,8 +5,7 @@ import TableData from "../components/TableData";
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text>{"This a HomeScreen"}</Text>
-      <TableData headline={"Total"} row1={8746532} row2={87451} row3={6462} />
+      <TableData headline={"TOTAL"} row1={8746532} row2={87451} row3={6462} />
     </View>
   );
 }

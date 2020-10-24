@@ -76,9 +76,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 7,
   },
   headline: {
+    fontFamily: "Roboto-Regular",
     color: "white",
-    fontSize: hp("2.35%"),
-    fontWeight: "bold",
+    fontSize: hp("2.8%"),
   },
   dataRow: {
     flex: 1,
@@ -86,12 +86,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   dataNames: {
-    fontWeight: "bold",
-    fontSize: hp("2.35%"),
+    fontFamily: "Roboto-Regular",
+    fontSize: hp("2.4%"),
     color: "#49494a",
   },
   dataNumbers: {
-    fontWeight: "500",
+    fontFamily: "Roboto-Medium",
     fontSize: hp("2.45%"),
     color: "#49494a",
   },

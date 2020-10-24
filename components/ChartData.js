@@ -132,15 +132,12 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 7,
     borderTopRightRadius: 7,
   },
-  headline: {
-    color: "white",
-    fontSize: hp("2.35%"),
-    fontWeight: "bold",
-  },
+
   headlineItem: {
     color: "white",
+    fontFamily: "Roboto-Regular",
     fontSize: hp("2.35%"),
-    fontWeight: "bold",
+
     textAlign: "center",
     marginTop: hp("1.5%"),
   },

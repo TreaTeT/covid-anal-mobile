@@ -6,7 +6,7 @@ export default function RegionsScreen() {
   return (
     <View style={styles.container}>
       <Text>{"This a Regions Screen"}</Text>
-      <BasicDataComponent />
+      <BasicDataComponent cases={"498435"} deaths={"216"} cured={"21584"} />
     </View>
   );
 }
