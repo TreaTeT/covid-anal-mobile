@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -8,26 +8,26 @@ import HomeScreen from "./screens/HomeScreen";
 import RegionsScreen from "./screens/RegionsScreen";
 import CountriesScreen from "./screens/CountriesScreen";
 import { useFonts } from "@use-expo/font";
-import { AppLoading } from "expo";
+import Loading from "./components/Loading";
 
 export default function App() {
   const [isLoaded] = useFonts({
-    "Roboto-Black": require("./assets/fonts/Roboto-Black.ttf"),
-    "Roboto-Black-Italic": require("./assets/fonts/Roboto-BlackItalic.ttf"),
-    "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
-    "Roboto-Bold-Italic": require("./assets/fonts/Roboto-BoldItalic.ttf"),
-    "Roboto-Italic": require("./assets/fonts/Roboto-Italic.ttf"),
-    "Roboto-Light": require("./assets/fonts/Roboto-Light.ttf"),
-    "Roboto-Light-Italic": require("./assets/fonts/Roboto-LightItalic.ttf"),
-    "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
-    "Roboto-Medium-Italic": require("./assets/fonts/Roboto-MediumItalic.ttf"),
-    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-Thin": require("./assets/fonts/Roboto-Thin.ttf"),
-    "Roboto-Thin-Italic": require("./assets/fonts/Roboto-ThinItalic.ttf"),
+    RobotoBlack: require("./assets/fonts/RobotoBlack.ttf"),
+    RobotoBlackItalic: require("./assets/fonts/RobotoBlackItalic.ttf"),
+    RobotoBold: require("./assets/fonts/RobotoBold.ttf"),
+    RobotoBoldItalic: require("./assets/fonts/RobotoBoldItalic.ttf"),
+    RobotoItalic: require("./assets/fonts/RobotoItalic.ttf"),
+    RobotoLight: require("./assets/fonts/RobotoLight.ttf"),
+    RobotoLightItalic: require("./assets/fonts/RobotoLightItalic.ttf"),
+    RobotoMedium: require("./assets/fonts/RobotoMedium.ttf"),
+    RobotoMediumItalic: require("./assets/fonts/RobotoMediumItalic.ttf"),
+    RobotoRegular: require("./assets/fonts/RobotoRegular.ttf"),
+    RobotoThin: require("./assets/fonts/RobotoThin.ttf"),
+    RobotoThinItalic: require("./assets/fonts/RobotoThinItalic.ttf"),
   });
 
   if (!isLoaded) {
-    return <AppLoading />;
+    return <Loading />;
   } else {
     return (
       <NavigationContainer>

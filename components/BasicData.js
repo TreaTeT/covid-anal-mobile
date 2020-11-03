@@ -38,8 +38,7 @@ const styles = StyleSheet.create({
   },
   basicDataText: {
     fontSize: wp("7%"),
-
-    fontFamily: "Roboto-Thin",
+    fontFamily: "RobotoThin",
   },
   basicDataNumber: {
     fontSize: wp("5%"),

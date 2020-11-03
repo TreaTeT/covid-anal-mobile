@@ -7,7 +7,7 @@ import {
 import { AreaChart, Grid } from "react-native-svg-charts";
 import * as shape from "d3-shape";
 
-const ChartData = (props) => {
+const ChartDataComponent = (props) => {
   const data = props.data;
 
   const [chartData, setChartData] = useState(data[0]);
@@ -48,8 +48,8 @@ const ChartData = (props) => {
                     styles.headlineItemContainer,
                     {
                       borderColor: "#666666",
-                      borderRightWidth: 2,
-                      borderLeftWidth: 2,
+                      borderRightWidth: 1,
+                      borderLeftWidth: 1,
                       backgroundColor: "#666666",
                     },
                   ]
@@ -57,8 +57,8 @@ const ChartData = (props) => {
                     styles.headlineItemContainer,
                     {
                       borderColor: "#666666",
-                      borderRightWidth: 2,
-                      borderLeftWidth: 2,
+                      borderRightWidth: 1,
+                      borderLeftWidth: 1,
                     },
                   ]
             }
@@ -86,6 +86,7 @@ const ChartData = (props) => {
           </View>
         </TouchableOpacity>
       </View>
+
       <AreaChart
         style={{ height: hp("26.2%"), width: wp("60%") }}
         data={chartData}
@@ -112,7 +113,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.36,
     shadowRadius: 6.68,
-
     elevation: 11,
     width: wp("83%"),
     maxHeight: hp("33%"),
@@ -132,12 +132,10 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 7,
     borderTopRightRadius: 7,
   },
-
   headlineItem: {
     color: "white",
-    fontFamily: "Roboto-Regular",
+    fontFamily: "RobotoRegular",
     fontSize: hp("2.35%"),
-
     textAlign: "center",
     marginTop: hp("1.5%"),
   },
@@ -147,4 +145,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChartData;
+export default ChartDataComponent;

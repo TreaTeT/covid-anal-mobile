@@ -5,7 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const TableData = (props) => {
+const TableDataComponent = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.headlineContainer}>
@@ -75,8 +75,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 7,
     borderTopRightRadius: 7,
   },
+
   headline: {
-    fontFamily: "Roboto-Regular",
+    fontFamily: "RobotoRegular",
     color: "white",
     fontSize: hp("2.8%"),
   },
@@ -86,15 +87,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   dataNames: {
-    fontFamily: "Roboto-Regular",
+    fontFamily: "RobotoRegular",
     fontSize: hp("2.4%"),
     color: "#49494a",
   },
   dataNumbers: {
-    fontFamily: "Roboto-Medium",
+    fontFamily: "RobotoMedium",
     fontSize: hp("2.45%"),
     color: "#49494a",
   },
 });
 
-export default TableData;
+export default TableDataComponent;
