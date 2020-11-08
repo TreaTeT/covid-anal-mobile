@@ -84,18 +84,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignSelf: "center",
     borderRadius: 5,
-    height: hp("3.5%"),
+    height: hp("3.7%"),
   },
   paragraph: {
     textAlign: "center",
-    fontSize: wp("4%"),
+    fontSize: wp("4.2%"),
     color: "#969696",
     fontFamily: "RobotoRegular",
   },
   selectItem: {
-    textAlign: "center",
     width: wp("26.67%"),
     height: hp("3.5%"),
+    textAlignVertical: "center",
   },
 });
 
