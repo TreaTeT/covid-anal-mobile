@@ -23,13 +23,11 @@ const styles = StyleSheet.create({
   },
   upperText: {
     marginTop: hp("48%"),
-    fontFamily: "RobotoRegular",
     fontSize: wp("5%"),
     color: "#363636",
     textAlign: "center",
   },
   lowerText: {
-    fontFamily: "RobotoBlack",
     fontSize: wp("3.1%"),
     color: "#363636",
     textAlign: "center",

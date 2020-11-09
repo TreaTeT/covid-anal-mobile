@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import BasicDataComponent from "../components/BasicData";
 import TableDataComponent from "../components/TableData";
@@ -10,21 +10,16 @@ import {
 } from "react-native-responsive-screen";
 
 export default function HomeScreen(props) {
-  const [BDC_state, setBDC_state] = useState({});
-
-  useEffect(() => {
-    setBDC_state(({ cases, deaths, recovered } = props.data.global));
-    // console.log(props.data);
-  }, []);
+  const { cases, deaths, recovered } = props.data.global;
 
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.basicDataComponent}>
           <BasicDataComponent
-            cases={BDC_state.cases}
-            deaths={BDC_state.deaths}
-            cured={BDC_state.recovered}
+            cases={cases}
+            deaths={deaths}
+            recovered={recovered}
           />
         </View>
 

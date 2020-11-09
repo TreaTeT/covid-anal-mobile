@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import {
@@ -10,6 +10,7 @@ const BasicDataComponent = (props) => {
   let formatNumber = (num) => {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.basicDataText}>Coronavirus Cases</Text>
@@ -20,7 +21,7 @@ const BasicDataComponent = (props) => {
       </Text>
       <Text style={styles.basicDataText}>Recovered</Text>
       <Text style={[styles.basicDataNumber, { color: "#35cd2b" }]}>
-        {formatNumber(props.cured)}
+        {formatNumber(props.recovered)}
       </Text>
     </View>
   );
@@ -29,7 +30,7 @@ const BasicDataComponent = (props) => {
 BasicDataComponent.propTypes = {
   cases: PropTypes.number,
   deaths: PropTypes.number,
-  cured: PropTypes.number,
+  recovered: PropTypes.number,
 };
 
 const styles = StyleSheet.create({
