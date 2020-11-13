@@ -6,6 +6,10 @@ import {
 } from "react-native-responsive-screen";
 
 const TableDataComponent = (props) => {
+  let formatNumber = (num) => {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headlineContainer}>
@@ -18,7 +22,7 @@ const TableDataComponent = (props) => {
         </View>
 
         <View style={{ paddingRight: wp("4%") }}>
-          <Text style={styles.dataNumbers}>{props.row1}</Text>
+          <Text style={styles.dataNumbers}>{formatNumber(props.row1)}</Text>
         </View>
       </View>
 
@@ -27,7 +31,7 @@ const TableDataComponent = (props) => {
           <Text style={styles.dataNames}>{"Deaths:"}</Text>
         </View>
         <View style={{ paddingRight: wp("4%") }}>
-          <Text style={styles.dataNumbers}>{props.row2}</Text>
+          <Text style={styles.dataNumbers}>{formatNumber(props.row2)}</Text>
         </View>
       </View>
 
@@ -36,7 +40,7 @@ const TableDataComponent = (props) => {
           <Text style={styles.dataNames}>{"Cured:"}</Text>
         </View>
         <View style={{ paddingRight: wp("4%") }}>
-          <Text style={styles.dataNumbers}>{props.row3}</Text>
+          <Text style={styles.dataNumbers}>{formatNumber(props.row3)}</Text>
         </View>
       </View>
     </View>

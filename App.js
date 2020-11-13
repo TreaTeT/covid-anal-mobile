@@ -17,38 +17,36 @@ export default function App() {
   const [HS_data, setHS_data] = useState({ data: "data" });
 
   useEffect(() => {
-    axios
-      .get("https://disease.sh/v3/covid-19/all")
-      .then((response) => {
-        setHS_data({ global: response.data, historical: "yes yes" });
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .then(() => {
-        setLoaded(true);
-      });
     // axios
-    //   .all([
-    //     axios.get("https://disease.sh/v3/covid-19/all", {}),
-    //     axios.get("https://disease.sh/v3/covid-19/historical/all", {}),
-    //   ])
-    //   .then(
-    //     axios.spread((data1, data2) => {
-    //       if (!isMounted) {
-    //         setHS_data({
-    //           global: data1.data,
-    //           historical: data2.data,
-    //         });
-    //       }
-    //     })
-    //   )
-    //   .catch((errors) => {
-    //     console.log(erros);
+    //   .get("https://disease.sh/v3/covid-19/all")
+    //   .then((response) => {
+    //     setHS_data({ global: response.data, historical: "yes yes" });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
     //   })
     //   .then(() => {
     //     setLoaded(true);
     //   });
+    axios
+      .all([
+        axios.get("https://disease.sh/v3/covid-19/all", {}),
+        axios.get("https://disease.sh/v3/covid-19/historical/all", {}),
+      ])
+      .then(
+        axios.spread((data1, data2) => {
+          setHS_data({
+            global: data1.data,
+            historical: data2.data,
+          });
+        })
+      )
+      .catch((errors) => {
+        console.log(erros);
+      })
+      .then(() => {
+        setLoaded(true);
+      });
   }, []);
 
   /*

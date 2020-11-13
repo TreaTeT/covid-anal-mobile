@@ -5,7 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const SelectComponent = () => {
+const SelectComponent = (props) => {
   const [focused, setFocused] = useState("first"); // first, second , third
 
   return (
@@ -13,6 +13,7 @@ const SelectComponent = () => {
       <TouchableWithoutFeedback
         onPress={() => {
           setFocused("first");
+          props.today();
         }}
       >
         <View style={[styles.selectItem, { borderRightWidth: 1 }]}>
@@ -34,6 +35,7 @@ const SelectComponent = () => {
       <TouchableWithoutFeedback
         onPress={() => {
           setFocused("second");
+          props.week();
         }}
       >
         <View style={styles.selectItem}>
@@ -55,6 +57,7 @@ const SelectComponent = () => {
       <TouchableWithoutFeedback
         onPress={() => {
           setFocused("third");
+          props.month();
         }}
       >
         <View style={[styles.selectItem, { borderLeftWidth: 1 }]}>

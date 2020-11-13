@@ -7,6 +7,7 @@ import {
 } from "react-native-responsive-screen";
 
 const BasicDataComponent = (props) => {
+  // format number from 165132 to 165,132
   let formatNumber = (num) => {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   };
