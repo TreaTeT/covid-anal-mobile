@@ -42,7 +42,7 @@ export default function App() {
         })
       )
       .catch((errors) => {
-        console.log(erros);
+        console.log(errors);
       })
       .then(() => {
         setLoaded(true);

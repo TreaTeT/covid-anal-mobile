@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import PropTypes from "prop-types";
 import {
   widthPercentageToDP as wp,
@@ -14,16 +14,44 @@ const BasicDataComponent = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.basicDataText}>Coronavirus Cases</Text>
-      <Text style={styles.basicDataNumber}>{formatNumber(props.cases)}</Text>
-      <Text style={styles.basicDataText}>Deaths</Text>
-      <Text style={[styles.basicDataNumber, { color: "#FF5733" }]}>
-        {formatNumber(props.deaths)}
-      </Text>
-      <Text style={styles.basicDataText}>Recovered</Text>
-      <Text style={[styles.basicDataNumber, { color: "#35cd2b" }]}>
-        {formatNumber(props.recovered)}
-      </Text>
+      <View style={styles.item_container}>
+        <Text style={styles.basicDataText}>Coronavirus Cases</Text>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <Image
+            source={require("../assets/Images/tick.png")}
+            style={styles.item_icon}
+          ></Image>
+          <Text style={[styles.basicDataNumber, { color: "#04B83F" }]}>
+            {formatNumber(props.cases)}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.item_container}>
+        <Text style={styles.basicDataText}>Deaths</Text>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <Image
+            source={require("../assets/Images/skull.png")}
+            style={styles.item_icon}
+          ></Image>
+          <Text style={[styles.basicDataNumber, { color: "#F74141" }]}>
+            {formatNumber(props.deaths)}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.item_container}>
+        <Text style={styles.basicDataText}>Recovered</Text>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <Image
+            source={require("../assets/Images/heart.png")}
+            style={styles.item_icon}
+          ></Image>
+          <Text style={[styles.basicDataNumber, { color: "#3C89F1" }]}>
+            {formatNumber(props.recovered)}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };
@@ -42,13 +70,30 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   basicDataText: {
-    fontSize: wp("7.8%"),
-    fontFamily: "RobotoThin",
+    fontSize: wp("5%"),
+    fontFamily: "RobotoLight",
+    marginLeft: wp("2%"),
+    marginTop: wp("2%"),
+    color: "#E6E6E6",
   },
   basicDataNumber: {
-    fontSize: wp("5.5s%"),
-    padding: wp("1%"),
-    paddingBottom: hp("3%"),
+    fontSize: wp("8%"),
+    marginLeft: wp("5%"),
+    marginTop: wp("1%"),
+    marginBottom: wp("2%"),
+    fontFamily: "RobotoMedium",
+  },
+
+  item_container: {
+    backgroundColor: "#343434",
+    borderRadius: 10,
+    width: wp("70%"),
+    margin: wp("1.75%"),
+  },
+  item_icon: {
+    width: wp("8.5%"),
+    height: wp("8.5%"),
+    margin: wp("2%"),
   },
 });
 export default BasicDataComponent;
