@@ -16,13 +16,19 @@ const SelectComponent = (props) => {
           props.today();
         }}
       >
-        <View style={[styles.selectItem, { borderRightWidth: 1 }]}>
+        <View
+          style={
+            focused === "first"
+              ? [styles.selectItem, { backgroundColor: "white" }]
+              : styles.selectItem
+          }
+        >
           <Text
             style={
               focused === "first"
                 ? [
                     styles.paragraph,
-                    { fontFamily: "RobotoMedium", color: "black" },
+                    { fontFamily: "RobotoMedium", color: "#343434" },
                   ]
                 : styles.paragraph
             }
@@ -38,13 +44,19 @@ const SelectComponent = (props) => {
           props.week();
         }}
       >
-        <View style={styles.selectItem}>
+        <View
+          style={
+            focused === "second"
+              ? [styles.selectItem, { backgroundColor: "white" }]
+              : styles.selectItem
+          }
+        >
           <Text
             style={
               focused === "second"
                 ? [
                     styles.paragraph,
-                    { fontFamily: "RobotoMedium", color: "black" },
+                    { fontFamily: "RobotoMedium", color: "#343434" },
                   ]
                 : styles.paragraph
             }
@@ -60,13 +72,19 @@ const SelectComponent = (props) => {
           props.month();
         }}
       >
-        <View style={[styles.selectItem, { borderLeftWidth: 1 }]}>
+        <View
+          style={
+            focused === "third"
+              ? [styles.selectItem, { backgroundColor: "white" }]
+              : styles.selectItem
+          }
+        >
           <Text
             style={
               focused === "third"
                 ? [
                     styles.paragraph,
-                    { fontFamily: "RobotoMedium", color: "black" },
+                    { fontFamily: "RobotoMedium", color: "#343434" },
                   ]
                 : styles.paragraph
             }
@@ -84,21 +102,30 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: wp("80%"),
     flexDirection: "row",
-    borderWidth: 1,
+    borderWidth: 2,
+    borderColor: "#414141",
     alignSelf: "center",
-    borderRadius: 5,
-    height: hp("3.7%"),
+    borderRadius: 7,
+    height: hp("5.15%"),
+    backgroundColor: "#414141",
   },
   paragraph: {
     textAlign: "center",
-    fontSize: wp("4.2%"),
-    color: "#969696",
+    fontSize: wp("3.5%"),
+    alignItems: "center",
+    color: "white",
     fontFamily: "RobotoRegular",
+    marginTop: wp("1.5%"),
   },
   selectItem: {
-    width: wp("26.67%"),
-    height: hp("3.5%"),
-    textAlignVertical: "center",
+    flex: 1,
+    alignContent: "space-around",
+    width: wp("26%"),
+    height: hp("4.5%"),
+
+    backgroundColor: "#414141",
+    marginBottom: 1,
+    borderRadius: 7,
   },
 });
 

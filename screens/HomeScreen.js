@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, StyleSheet, ScrollView, Text } from "react-native";
+import { View, StyleSheet, ScrollView, Text, SafeAreaView } from "react-native";
 import BasicDataComponent from "../components/BasicData";
 import TableDataComponent from "../components/TableData";
 import ChartDataComponent from "../components/ChartData";
 import SelectComponent from "../components/SelectComponent";
+import TitleComponent from "../components/TitleComponent";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -76,59 +77,63 @@ export default function HomeScreen(props) {
   const [select_data, set_select_data] = useState(today_data);
   const [display_graph, set_display_graph] = useState(false);
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.basicDataComponent}>
-          <BasicDataComponent
-            cases={cases}
-            deaths={deaths}
-            recovered={recovered}
-          />
-        </View>
+    <View>
+      <TitleComponent title={"Statistics"} />
 
-        <View style={styles.selectComponent}>
-          <SelectComponent
-            today={() => {
-              set_select_data(today_data);
-              set_display_graph(false);
-            }}
-            week={() => {
-              set_select_data(week_data);
-              set_display_graph(true);
-            }}
-            month={() => {
-              set_select_data(month_data);
-              set_display_graph(true);
-            }}
-          />
-        </View>
-
-        <View style={styles.tableDataComponent}>
-          <TableDataComponent
-            headline={"TOTAL"}
-            row1={select_data.table.cases}
-            row2={select_data.table.deaths}
-            row3={select_data.table.recovered}
-          />
-        </View>
-
-        <View style={styles.chartDataComponent}>
-          {display_graph ? (
-            <ChartDataComponent
-              data={[
-                select_data.graph.cases,
-                select_data.graph.deaths,
-                select_data.graph.recovered,
-              ]}
+      <ScrollView style={{ marginTop: hp("10%") }}>
+        <View style={styles.container}>
+          <View style={styles.basicDataComponent}>
+            <BasicDataComponent
+              cases={cases}
+              deaths={deaths}
+              recovered={recovered}
             />
-          ) : (
-            <View>
-              <Text>{"There is a no fucking graph fuck off"}</Text>
-            </View>
-          )}
+          </View>
+
+          <View style={styles.selectComponent}>
+            <SelectComponent
+              today={() => {
+                set_select_data(today_data);
+                set_display_graph(false);
+              }}
+              week={() => {
+                set_select_data(week_data);
+                set_display_graph(true);
+              }}
+              month={() => {
+                set_select_data(month_data);
+                set_display_graph(true);
+              }}
+            />
+          </View>
+
+          <View style={styles.tableDataComponent}>
+            <TableDataComponent
+              headline={"TOTAL"}
+              row1={select_data.table.cases}
+              row2={select_data.table.deaths}
+              row3={select_data.table.recovered}
+            />
+          </View>
+
+          <View style={styles.chartDataComponent}>
+            {display_graph ? (
+              <ChartDataComponent
+                data={[
+                  select_data.graph.cases,
+                  select_data.graph.deaths,
+                  select_data.graph.recovered,
+                ]}
+              />
+            ) : (
+              <View>
+                <Text>{"There is a no fucking graph fuck off"}</Text>
+              </View>
+            )}
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -138,7 +143,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#fff",
     justifyContent: "center",
-    height: hp("175%"),
+    height: hp("210%"),
     padding: 0,
     alignItems: "center",
   },

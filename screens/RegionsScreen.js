@@ -18,7 +18,7 @@ import {
 export default function RegionsScreen() {
   return (
     <View style={styles.container}>
-      <Text>{"This a Regions Screen"}</Text>
+      {/* <Text>{"This a Regions Screen"}</Text>
       <View>
         <Text>Bezier Line Chart</Text>
         <LineChart
@@ -80,13 +80,25 @@ export default function RegionsScreen() {
             borderRadius: 0,
           }}
         />
-      </View>
+      </View> */}
       {/* <BasicDataComponent
         cases={56468453}
         deaths={6844684}
         recovered={654654}
       />
       <SelectComponent /> */}
+
+      <SelectComponent
+        today={() => {
+          console.log("today");
+        }}
+        week={() => {
+          console.log("week");
+        }}
+        month={() => {
+          console.log("month");
+        }}
+      />
     </View>
   );
 }
