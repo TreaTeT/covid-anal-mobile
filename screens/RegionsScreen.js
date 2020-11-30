@@ -15,78 +15,39 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
+import {
+  VictoryLine,
+  VictoryChart,
+  VictoryTheme,
+  VictoryAxis,
+} from "victory-native";
 export default function RegionsScreen() {
+  let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
   return (
     <View style={styles.container}>
-      {/* <Text>{"This a Regions Screen"}</Text>
-      <View>
-        <Text>Bezier Line Chart</Text>
-        <LineChart
-          data={{
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                ],
-              },
-            ],
-          }}
-          width={wp("98%")} // from react-native
-          height={280}
-          yAxisLabel="$"
-          yAxisSuffix="k"
-          yAxisInterval={1} // optional, defaults to 1
-          chartConfig={{
-            backgroundColor: "#fff",
-            backgroundGradientFrom: "#fff",
-            backgroundGradientTo: "#fff",
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-            propsForDots: {
-              r: "3",
-              strokeWidth: "2",
-              stroke: "#000",
-            },
-          }}
-          style={{
-            marginVertical: 0,
-            borderRadius: 0,
-          }}
-        />
-      </View> */}
+      {console.log(data)}
+      <Text>{"This a Regions Screen"}</Text>
+
       {/* <BasicDataComponent
         cases={56468453}
         deaths={6844684}
         recovered={654654}
       />
       <SelectComponent /> */}
+      <VictoryChart theme={VictoryTheme.material} width={350}>
+        <VictoryLine
+          style={{
+            data: { stroke: "#c43a31" },
+            parent: { border: "1px solid #ccc" },
+          }}
+          data={[
+            {
+              x: data[0],
+              y: data[0],
+            },
+          ]}
+        />
+      </VictoryChart>
 
       <SelectComponent
         today={() => {

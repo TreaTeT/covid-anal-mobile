@@ -78,6 +78,58 @@ const ChartDataComponent = (props) => {
 
       <View style={{ flexDirection: "row" }}>
         {console.log(chart_data)}
+
+        {/* <LineChart
+          data={{
+            datasets: [
+              {
+                data: [
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                  Math.random() * 100,
+                ],
+              },
+            ],
+          }}
+          width={wp("98%")} // from react-native
+          height={280}
+          yAxisLabel="$"
+          yAxisSuffix="k"
+          yAxisInterval={1} // optional, defaults to 1
+          chartConfig={{
+            backgroundColor: "#fff",
+            backgroundGradientFrom: "#fff",
+            backgroundGradientTo: "#fff",
+            decimalPlaces: 2, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            style: {
+              borderRadius: 16,
+            },
+            propsForDots: {
+              r: "3",
+              strokeWidth: "2",
+              stroke: "#000",
+            },
+          }}
+          style={{
+            marginVertical: 0,
+            borderRadius: 0,
+          }}
+        /> */}
         <YAxis
           data={chart_data}
           contentInset={{ top: wp("2%") }}

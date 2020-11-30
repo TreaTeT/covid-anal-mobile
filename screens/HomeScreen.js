@@ -115,7 +115,7 @@ export default function HomeScreen(props) {
               row3={select_data.table.recovered}
             />
           </View>
-
+          {console.log(select_data.graph.cases)}
           <View style={styles.chartDataComponent}>
             {display_graph ? (
               <ChartDataComponent
