@@ -40,13 +40,10 @@ export default function RegionsScreen() {
             data: { stroke: "#c43a31" },
             parent: { border: "1px solid #ccc" },
           }}
-          data={[
-            {
-              x: data[0],
-              y: data[0],
-            },
-          ]}
+          data={data}
+          y={(d) => d * 100}
         />
+        <VictoryAxis dependentAxis />
       </VictoryChart>
 
       <SelectComponent

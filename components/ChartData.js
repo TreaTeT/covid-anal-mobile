@@ -5,6 +5,12 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { LineChart, Grid, YAxis } from "react-native-svg-charts";
+import {
+  VictoryLine,
+  VictoryChart,
+  VictoryTheme,
+  VictoryAxis,
+} from "victory-native";
 
 const ChartDataComponent = (props) => {
   const data = props.data;
@@ -13,73 +19,74 @@ const ChartDataComponent = (props) => {
   const [focused, set_focused] = useState("cases");
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headlineContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            set_focused("cases");
-            set_chart_data(data[0]);
-          }}
-        >
-          <View style={styles.headlineItemContainer}>
-            <Text
-              style={
-                focused == "cases"
-                  ? [styles.headlineItem, { color: "black" }]
-                  : styles.headlineItem
-              }
-            >
-              Cases
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            set_focused("deaths");
-            set_chart_data(data[1]);
-          }}
-        >
-          <View style={styles.headlineItemContainer}>
-            <Text
-              style={
-                focused == "deaths"
-                  ? [
-                      styles.headlineItem,
-                      {
-                        color: "black",
-                      },
-                    ]
-                  : styles.headlineItem
-              }
-            >
-              Deaths
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            set_focused("cured");
-            set_chart_data(data[2]);
-          }}
-        >
-          <View style={styles.headlineItemContainer}>
-            <Text
-              style={
-                focused == "cured"
-                  ? [styles.headlineItem, { color: "black" }]
-                  : styles.headlineItem
-              }
-            >
-              Cured
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+    <View>
+      <View style={styles.container}>
+        <View style={styles.headlineContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              set_focused("cases");
+              set_chart_data(data[0]);
+            }}
+          >
+            <View style={styles.headlineItemContainer}>
+              <Text
+                style={
+                  focused == "cases"
+                    ? [styles.headlineItem, { color: "black" }]
+                    : styles.headlineItem
+                }
+              >
+                Cases
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              set_focused("deaths");
+              set_chart_data(data[1]);
+            }}
+          >
+            <View style={styles.headlineItemContainer}>
+              <Text
+                style={
+                  focused == "deaths"
+                    ? [
+                        styles.headlineItem,
+                        {
+                          color: "black",
+                        },
+                      ]
+                    : styles.headlineItem
+                }
+              >
+                Deaths
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              set_focused("cured");
+              set_chart_data(data[2]);
+            }}
+          >
+            <View style={styles.headlineItemContainer}>
+              <Text
+                style={
+                  focused == "cured"
+                    ? [styles.headlineItem, { color: "black" }]
+                    : styles.headlineItem
+                }
+              >
+                Cured
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-      <View style={{ flexDirection: "row" }}>
-        {console.log(chart_data)}
+        <View style={{ flexDirection: "row" }}>
+          {console.log(chart_data)}
 
-        {/* <LineChart
+          {/* <LineChart
           data={{
             datasets: [
               {
@@ -129,8 +136,10 @@ const ChartDataComponent = (props) => {
             marginVertical: 0,
             borderRadius: 0,
           }}
+
         /> */}
-        <YAxis
+
+          {/* <YAxis
           data={chart_data}
           contentInset={{ top: wp("2%") }}
           svg={{
@@ -150,11 +159,11 @@ const ChartDataComponent = (props) => {
             let res = Math.round((value / 1000000) * 10) / 10;
             return `${res.toFixed(1)}M`;
           }}
-        />
+        /> */}
 
-        {/* TODO:try this charts https://www.npmjs.com/package/react-native-chart-kit*/}
+          {/* TODO:try this charts https://www.npmjs.com/package/react-native-chart-kit*/}
 
-        <LineChart
+          {/* <LineChart
           style={{ height: hp("33%"), width: wp("76%") }}
           data={chart_data}
           contentInset={{ top: wp("2%") }}
@@ -163,8 +172,21 @@ const ChartDataComponent = (props) => {
           animationDuration={350}
         >
           <Grid />
-        </LineChart>
+        </LineChart> */}
+        </View>
       </View>
+
+      <VictoryChart theme={VictoryTheme.material} width={wp("50%")}>
+        <VictoryLine
+          style={{
+            data: { stroke: "#c43a31" },
+            parent: { border: "1px solid #ccc" },
+          }}
+          data={[1100, 16415, 484345, 16531, 0, 54, 15]}
+          y={(d) => d / 1000}
+        />
+        <VictoryAxis dependentAxis />
+      </VictoryChart>
     </View>
   );
 };

@@ -9,6 +9,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import SingleChart from "../components/SingleChart";
 
 export default function HomeScreen(props) {
   const { global, historical } = props.data;
@@ -118,13 +119,24 @@ export default function HomeScreen(props) {
           {console.log(select_data.graph.cases)}
           <View style={styles.chartDataComponent}>
             {display_graph ? (
-              <ChartDataComponent
-                data={[
-                  select_data.graph.cases,
-                  select_data.graph.deaths,
-                  select_data.graph.recovered,
-                ]}
-              />
+              // <ChartDataComponent
+              //   data={[
+              //     select_data.graph.cases,
+              //     select_data.graph.deaths,
+              //     select_data.graph.recovered,
+              //   ]}
+              // />
+              <View>
+                <SingleChart data={select_data.graph.cases} color={"#04B83F"} />
+                <SingleChart
+                  data={select_data.graph.deaths}
+                  color={"#F74141"}
+                />
+                <SingleChart
+                  data={select_data.graph.recovered}
+                  color={"#3C89F1"}
+                />
+              </View>
             ) : (
               <View>
                 <Text>{"There is a no fucking graph fuck off"}</Text>
@@ -143,7 +155,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#fff",
     justifyContent: "center",
-    height: hp("210%"),
+    height: hp("240%"),
     padding: 0,
     alignItems: "center",
   },
