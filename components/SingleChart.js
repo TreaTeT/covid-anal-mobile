@@ -13,26 +13,7 @@ import {
 
 const SingleChart = (props) => {
   return (
-    <View
-      style={{
-        borderBottomLeftRadius: 7,
-        borderBottomRightRadius: 7,
-        borderTopLeftRadius: 7,
-        borderTopRightRadius: 7,
-        backgroundColor: "white",
-
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 5,
-        },
-
-        shadowOpacity: 0.36,
-        shadowRadius: 6.68,
-        elevation: 11,
-        margin: 5,
-      }}
-    >
+    <View style={styles.chart_container}>
       <VictoryChart
         theme={VictoryTheme.material}
         width={wp("88%")}
@@ -44,16 +25,34 @@ const SingleChart = (props) => {
             parent: { border: "1px solid #ccc" },
           }}
           data={props.data}
-          y={(d) => d / 1000000}
-          s
+          //y={(d) => d / 1000000}
         />
-
-        <VictoryAxis dependentAxis />
+        <VictoryAxis dependentAxis tickFormat={(x) => `${x / 1000000}M`} />
+        {/* <VictoryAxis dependentAxis /> */}
       </VictoryChart>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  chart_container: {
+    borderBottomLeftRadius: 7,
+    borderBottomRightRadius: 7,
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    backgroundColor: "white",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+
+    shadowOpacity: 0.36,
+    shadowRadius: 6.68,
+    elevation: 11,
+    margin: 5,
+  },
+});
 
 export default SingleChart;

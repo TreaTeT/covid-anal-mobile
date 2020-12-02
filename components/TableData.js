@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   headlineContainer: {
     flex: 2,
-    backgroundColor: "#888888",
+    backgroundColor: "#3d3d3b",
     alignItems: "center",
     justifyContent: "center",
     width: wp("80%"),

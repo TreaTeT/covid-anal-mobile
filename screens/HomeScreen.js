@@ -82,7 +82,13 @@ export default function HomeScreen(props) {
       <TitleComponent title={"Statistics"} />
 
       <ScrollView style={{ marginTop: hp("10%") }}>
-        <View style={styles.container}>
+        <View
+          style={
+            display_graph
+              ? styles.container
+              : [styles.container, { height: hp("150%") }]
+          }
+        >
           <View style={styles.basicDataComponent}>
             <BasicDataComponent
               cases={cases}
@@ -127,11 +133,14 @@ export default function HomeScreen(props) {
               //   ]}
               // />
               <View>
+                <Text style={styles.chart_title}>Cases</Text>
                 <SingleChart data={select_data.graph.cases} color={"#04B83F"} />
+                <Text style={styles.chart_title}>Deaths</Text>
                 <SingleChart
                   data={select_data.graph.deaths}
                   color={"#F74141"}
                 />
+                <Text style={styles.chart_title}>Cured</Text>
                 <SingleChart
                   data={select_data.graph.recovered}
                   color={"#3C89F1"}
@@ -139,7 +148,7 @@ export default function HomeScreen(props) {
               </View>
             ) : (
               <View>
-                <Text>{"There is a no fucking graph fuck off"}</Text>
+                <Text>{"There is n graph"}</Text>
               </View>
             )}
           </View>
@@ -155,7 +164,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#fff",
     justifyContent: "center",
-    height: hp("240%"),
+    height: hp("265%"),
     padding: 0,
     alignItems: "center",
   },
@@ -176,5 +185,12 @@ const styles = StyleSheet.create({
   chartDataComponent: {
     alignSelf: "center",
     top: hp("38%"),
+  },
+  chart_title: {
+    textAlign: "center",
+    margin: wp("3%"),
+    fontFamily: "RobotoLight",
+    fontSize: wp("4.5%"),
+    color: "#343434",
   },
 });
