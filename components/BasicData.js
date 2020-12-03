@@ -83,9 +83,8 @@ const styles = StyleSheet.create({
     marginBottom: wp("2%"),
     fontFamily: "RobotoMedium",
   },
-
   item_container: {
-    backgroundColor: "#343434",
+    backgroundColor: "#394048",
     borderRadius: 10,
     width: wp("70%"),
     margin: wp("1.75%"),

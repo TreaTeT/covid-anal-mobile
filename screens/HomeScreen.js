@@ -116,7 +116,7 @@ export default function HomeScreen(props) {
 
           <View style={styles.tableDataComponent}>
             <TableDataComponent
-              headline={"TOTAL"}
+              headline={"Affected people"}
               row1={select_data.table.cases}
               row2={select_data.table.deaths}
               row3={select_data.table.recovered}

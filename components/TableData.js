@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   headlineContainer: {
     flex: 2,
-    backgroundColor: "#3d3d3b",
+    backgroundColor: "#394048",
     alignItems: "center",
     justifyContent: "center",
     width: wp("80%"),
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   headline: {
     fontFamily: "RobotoRegular",
     color: "white",
-    fontSize: hp("2.8%"),
+    fontSize: hp("2.3%"),
   },
   dataRow: {
     flex: 1,

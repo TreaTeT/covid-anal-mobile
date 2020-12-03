@@ -28,7 +28,7 @@ const SelectComponent = (props) => {
               focused === "first"
                 ? [
                     styles.paragraph,
-                    { fontFamily: "RobotoMedium", color: "#343434" },
+                    { fontFamily: "RobotoMedium", color: "#394048" },
                   ]
                 : styles.paragraph
             }
@@ -56,7 +56,7 @@ const SelectComponent = (props) => {
               focused === "second"
                 ? [
                     styles.paragraph,
-                    { fontFamily: "RobotoMedium", color: "#343434" },
+                    { fontFamily: "RobotoMedium", color: "#394048" },
                   ]
                 : styles.paragraph
             }
@@ -84,7 +84,7 @@ const SelectComponent = (props) => {
               focused === "third"
                 ? [
                     styles.paragraph,
-                    { fontFamily: "RobotoMedium", color: "#343434" },
+                    { fontFamily: "RobotoMedium", color: "#394048" },
                   ]
                 : styles.paragraph
             }
@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
     width: wp("80%"),
     flexDirection: "row",
     borderWidth: 2,
-    borderColor: "#414141",
+    borderColor: "#394048",
     alignSelf: "center",
     borderRadius: 7,
     height: hp("5.15%"),
-    backgroundColor: "#414141",
+    backgroundColor: "#394048",
   },
   paragraph: {
     textAlign: "center",
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     width: wp("26%"),
     height: hp("4.5%"),
 
-    backgroundColor: "#414141",
+    backgroundColor: "#394048",
     marginBottom: 1,
     borderRadius: 7,
   },
