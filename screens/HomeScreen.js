@@ -10,19 +10,45 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import SingleChart from "../components/SingleChart";
+import AdditionalDataComponent from "../components/AdditionalDataComponent";
 
 export default function HomeScreen(props) {
   const { global, historical } = props.data;
+  console.log(global);
   const { todayCases, todayDeaths, todayRecovered } = global;
   const { cases, deaths, recovered } = global;
-
+  const additionalData = [
+    {
+      title: "Affected Countries",
+      data: global.affectedCountries,
+    },
+    {
+      title: "Active",
+      data: global.active,
+    },
+    {
+      title: "Critical",
+      data: global.critical,
+    },
+    {
+      title: "Tests",
+      data: global.tests,
+    },
+    {
+      title: "Tests per one mil.",
+      data: global.testsPerOneMillion,
+    },
+    {
+      title: "Cases per one mil.",
+      data: global.casesPerOneMillion,
+    },
+    {
+      title: "Deaths per one mil.",
+      data: global.deathsPerOneMillion,
+    },
+  ];
   // TODO: Figure a way to show graphs with only one value
   // TODO: Format the numbers to one or 0 decimal places before showing as an legend to the chart
-  //LAST I DID: imporved the chart component and researched more about the char itself
-  // console.log(historical);
-  // chart.js library
-  // also need to find a way to generate graph from 0 to a certain value
-  // or from a value to another value => prolly the best
 
   const today_data = {
     table: {
@@ -86,7 +112,7 @@ export default function HomeScreen(props) {
           style={
             display_graph
               ? styles.container
-              : [styles.container, { height: hp("150%") }]
+              : [styles.container, { height: hp("190%") }]
           }
         >
           <View style={styles.basicDataComponent}>
@@ -121,6 +147,9 @@ export default function HomeScreen(props) {
               row2={select_data.table.deaths}
               row3={select_data.table.recovered}
             />
+          </View>
+          <View style={styles.additionalDataComponent}>
+            <AdditionalDataComponent data={additionalData} />
           </View>
           {console.log(select_data.graph.cases)}
           <View style={styles.chartDataComponent}>
@@ -164,7 +193,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#fff",
     justifyContent: "center",
-    height: hp("265%"),
+    height: hp("315%"),
     padding: 0,
     alignItems: "center",
   },
@@ -180,11 +209,11 @@ const styles = StyleSheet.create({
   },
   tableDataComponent: {
     alignSelf: "center",
-    top: hp("32%"),
+    top: hp("38%"),
   },
   chartDataComponent: {
     alignSelf: "center",
-    top: hp("38%"),
+    top: hp("50%"),
   },
   chart_title: {
     textAlign: "center",
@@ -192,5 +221,8 @@ const styles = StyleSheet.create({
     fontFamily: "RobotoLight",
     fontSize: wp("4.5%"),
     color: "#343434",
+  },
+  additionalDataComponent: {
+    top: hp("45%"),
   },
 });
