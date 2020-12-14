@@ -1,17 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import ChartDataComponent from "../components/ChartData";
+import CountryItem from "../components/CountryItem";
 
-export default function CountriesScreen() {
+function CountriesScreen() {
   return (
     <View style={styles.container}>
-      <ChartDataComponent
-        data={[
-          [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80],
-          [50, 10, 40, 95, 40, 24, 85, 91, 35, 53, 53, 24, 50, 20, 80],
-          [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, 20, 80],
-        ]}
-      />
+      <CountryItem />
     </View>
   );
 }
@@ -24,3 +19,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default CountriesScreen;

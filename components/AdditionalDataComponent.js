@@ -41,17 +41,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 7,
     borderTopLeftRadius: 7,
     borderTopRightRadius: 7,
-
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 5,
-    // },
-
-    // shadowOpacity: 0.36,
-    // shadowRadius: 6.68,
-    // elevation: 11,
-    // margin: 5,
   },
 
   item: {
@@ -76,7 +65,7 @@ const styles = StyleSheet.create({
     paddingVertical: wp("0.5%"),
     paddingHorizontal: wp("3.5%"),
     borderRadius: 7,
-    backgroundColor: "#343434",
+    backgroundColor: "#394048",
   },
 });
 

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, StyleSheet, ScrollView, Text, SafeAreaView } from "react-native";
 import BasicDataComponent from "../components/BasicData";
 import TableDataComponent from "../components/TableData";
-import ChartDataComponent from "../components/ChartData";
 import SelectComponent from "../components/SelectComponent";
 import TitleComponent from "../components/TitleComponent";
 import {
