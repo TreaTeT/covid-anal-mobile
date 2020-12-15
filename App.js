@@ -15,6 +15,7 @@ const axios = require("axios");
 export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [HS_data, setHS_data] = useState({ data: "data" });
+  const [CS_data, setCS_data] = useState([]);
 
   useEffect(() => {
     // axios
@@ -32,13 +33,16 @@ export default function App() {
       .all([
         axios.get("https://disease.sh/v3/covid-19/all", {}),
         axios.get("https://disease.sh/v3/covid-19/historical/all", {}),
+        axios.get("https://disease.sh/v3/covid-19/countries", {}),
       ])
       .then(
-        axios.spread((data1, data2) => {
+        axios.spread((data1, data2, data3) => {
           setHS_data({
             global: data1.data,
             historical: data2.data,
           });
+
+          setCS_data(data3);
         })
       )
       .catch((errors) => {
@@ -123,7 +127,7 @@ export default function App() {
           <Tab.Screen
             name="Countries"
             options={{ title: "" }}
-            children={() => <CountriesScreen />}
+            children={() => <CountriesScreen data={CS_data} />}
           />
           <Tab.Screen
             name="Regions"

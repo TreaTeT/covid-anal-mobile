@@ -13,7 +13,7 @@ import AdditionalDataComponent from "../components/AdditionalDataComponent";
 
 export default function HomeScreen(props) {
   const { global, historical } = props.data;
-  console.log(global);
+  // console.log(global);
   const { todayCases, todayDeaths, todayRecovered } = global;
   const { cases, deaths, recovered } = global;
   const additionalData = [
@@ -150,7 +150,7 @@ export default function HomeScreen(props) {
           <View style={styles.additionalDataComponent}>
             <AdditionalDataComponent data={additionalData} />
           </View>
-          {console.log(select_data.graph.cases)}
+          {/*console.log(select_data.graph.cases)*/}
           <View style={styles.chartDataComponent}>
             {display_graph ? (
               // <ChartDataComponent
