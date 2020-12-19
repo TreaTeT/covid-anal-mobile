@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     paddingLeft: wp("5%"),
   },
   touchable: {
-    width: wp("85%"),
+    marginVertical: wp("1%"),
+    width: wp("99%"),
     height: hp("8.5%"),
     backgroundColor: "blue",
     backgroundColor: "#F5F5F5",

@@ -80,7 +80,7 @@ export default function HomeScreen(props) {
       recovered: Object.values(historical.recovered).slice(22),
     },
   };
-
+  console.log(week_data);
   const month_data = {
     table: {
       cases:
