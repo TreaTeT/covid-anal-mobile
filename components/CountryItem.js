@@ -10,7 +10,7 @@ const CountryItem = ({ country, ab, id }) => {
   return (
     <TouchableWithoutFeedback
       style={styles.touchable}
-      onPress={() => console.log("henlo thedre" + id)}
+      onPress={() => console.log("henlo there" + id)}
     >
       <View style={styles.container}>
         <View style={{ flex: 1, flexDirection: "row" }}>
@@ -33,14 +33,15 @@ const CountryItem = ({ country, ab, id }) => {
 const styles = StyleSheet.create({
   country_name: {
     fontFamily: "RobotoMedium",
-    fontSize: wp("6%"),
+    fontSize: wp("5%"),
     color: "#394048",
-    paddingTop: hp("2.2%"),
+    paddingTop: hp("2.5%"),
     paddingLeft: wp("5%"),
   },
   touchable: {
     marginVertical: wp("1%"),
-    width: wp("99%"),
+    marginHorizontal: wp("2%"),
+    width: wp("90%"),
     height: hp("8.5%"),
     backgroundColor: "blue",
     backgroundColor: "#F5F5F5",
@@ -60,6 +61,7 @@ const styles = StyleSheet.create({
   container: {
     width: wp("85%"),
     height: hp("8.5%"),
+    marginLeft: wp("2%"),
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderTopLeftRadius: 10,

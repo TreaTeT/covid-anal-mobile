@@ -7,10 +7,14 @@ import {
 } from "react-native-responsive-screen";
 
 function CountriesScreen(props) {
+  const d = props.data.data.filter(
+    (item) =>
+      item.country !== "Diamond Princess" && item.country !== "MS Zaandam"
+  );
   return (
     <View style={styles.container}>
       <FlatList
-        data={props.data.data}
+        data={d}
         renderItem={({ item }) => (
           <CountryItem
             country={item.country}
