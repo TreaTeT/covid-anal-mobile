@@ -6,28 +6,79 @@ import {
 } from "react-native-responsive-screen";
 
 const AdditionalDataComponent = (props) => {
+  const data = props.data;
   let formatNumber = (num) => {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   };
-  const renderItem = ({ item }) => (
-    <Item title={item.title} data={formatNumber(item.data)} />
-  );
+  // const renderItem = ({ item }) => (
+  //   <Item title={item.title} data={formatNumber(item.data)} />
+  // );
 
-  const Item = ({ title, data }) => (
-    <View style={styles.item}>
-      <Text style={styles.text}>{title}</Text>
-      <View style={styles.number_container}>
-        <Text style={styles.number}>{data}</Text>
-      </View>
-    </View>
-  );
+  // const Item = ({ title, data }) => (
+  //   <View style={styles.item}>
+  //     <Text style={styles.text}>{title}</Text>
+  //     <View style={styles.number_container}>
+  //       <Text style={styles.number}>{data}</Text>
+  //     </View>
+  //   </View>
+  // );
+
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
+      {/* <FlatList
         data={props.data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.data}
-      />
+        keyExtractor={(item) => item.data.toString()}
+      /> 
+  */}
+
+      <View style={styles.item}>
+        <Text style={styles.text}>{"Active"}</Text>
+        <View style={styles.number_container}>
+          <Text style={styles.number}>{formatNumber(data.active)}</Text>
+        </View>
+      </View>
+
+      <View style={styles.item}>
+        <Text style={styles.text}>{"Critical"}</Text>
+        <View style={styles.number_container}>
+          <Text style={styles.number}>{formatNumber(data.critical)}</Text>
+        </View>
+      </View>
+
+      <View style={styles.item}>
+        <Text style={styles.text}>{"Tests"}</Text>
+        <View style={styles.number_container}>
+          <Text style={styles.number}>{formatNumber(data.tests)}</Text>
+        </View>
+      </View>
+
+      <View style={styles.item}>
+        <Text style={styles.text}>{"Tests per one mil."}</Text>
+        <View style={styles.number_container}>
+          <Text style={styles.number}>
+            {formatNumber(data.testsPerOneMillion)}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.item}>
+        <Text style={styles.text}>{"Cases per one mil."}</Text>
+        <View style={styles.number_container}>
+          <Text style={styles.number}>
+            {formatNumber(data.casesPerOneMillion)}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.item}>
+        <Text style={styles.text}>{"Deaths per one mil."}</Text>
+        <View style={styles.number_container}>
+          <Text style={styles.number}>
+            {formatNumber(data.deathsPerOneMillion)}
+          </Text>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -64,6 +115,7 @@ const styles = StyleSheet.create({
   number_container: {
     paddingVertical: wp("0.5%"),
     paddingHorizontal: wp("3.5%"),
+    height: hp("3.5%"),
     borderRadius: 7,
     backgroundColor: "#394048",
   },

@@ -16,36 +16,7 @@ export default function HomeScreen(props) {
   // console.log(global);
   const { todayCases, todayDeaths, todayRecovered } = global;
   const { cases, deaths, recovered } = global;
-  const additionalData = [
-    {
-      title: "Affected Countries",
-      data: global.affectedCountries,
-    },
-    {
-      title: "Active",
-      data: global.active,
-    },
-    {
-      title: "Critical",
-      data: global.critical,
-    },
-    {
-      title: "Tests",
-      data: global.tests,
-    },
-    {
-      title: "Tests per one mil.",
-      data: global.testsPerOneMillion,
-    },
-    {
-      title: "Cases per one mil.",
-      data: global.casesPerOneMillion,
-    },
-    {
-      title: "Deaths per one mil.",
-      data: global.deathsPerOneMillion,
-    },
-  ];
+
   // TODO: Figure a way to show graphs with only one value
   // TODO: Format the numbers to one or 0 decimal places before showing as an legend to the chart
 
@@ -147,19 +118,35 @@ export default function HomeScreen(props) {
               row3={select_data.table.recovered}
             />
           </View>
-          <View style={styles.additionalDataComponent}>
-            <AdditionalDataComponent data={additionalData} />
+
+          <View style={{ top: hp("42.5%") }}>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: wp("4%"),
+                fontFamily: "RobotoRegular",
+              }}
+            >
+              {"Countries Affected"}
+            </Text>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: wp("5.5%"),
+                fontFamily: "RobotoBlack",
+                color: "#ff2626",
+              }}
+            >
+              {global.affectedCountries}
+            </Text>
           </View>
-          {/*console.log(select_data.graph.cases)*/}
+
+          <View style={styles.additionalDataComponent}>
+            <AdditionalDataComponent data={global} />
+          </View>
+
           <View style={styles.chartDataComponent}>
             {display_graph ? (
-              // <ChartDataComponent
-              //   data={[
-              //     select_data.graph.cases,
-              //     select_data.graph.deaths,
-              //     select_data.graph.recovered,
-              //   ]}
-              // />
               <View>
                 <Text style={styles.chart_title}>Cases</Text>
                 <SingleChart data={select_data.graph.cases} color={"#04B83F"} />

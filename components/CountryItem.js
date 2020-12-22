@@ -6,12 +6,12 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const CountryItem = ({ country, ab, id }) => {
+const CountryItem = ({ country, ab, id, onPress }) => {
+  const handleOnPress = () => {
+    onPress();
+  };
   return (
-    <TouchableWithoutFeedback
-      style={styles.touchable}
-      onPress={() => console.log("henlo there" + id)}
-    >
+    <TouchableWithoutFeedback style={styles.touchable} onPress={handleOnPress}>
       <View style={styles.container}>
         <View style={{ flex: 1, flexDirection: "row" }}>
           <View style={styles.image_container}>
