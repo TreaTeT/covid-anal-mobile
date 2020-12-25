@@ -17,9 +17,6 @@ export default function HomeScreen(props) {
   const { todayCases, todayDeaths, todayRecovered } = global;
   const { cases, deaths, recovered } = global;
 
-  // TODO: Figure a way to show graphs with only one value
-  // TODO: Format the numbers to one or 0 decimal places before showing as an legend to the chart
-
   const today_data = {
     table: {
       cases: todayCases,
@@ -51,7 +48,7 @@ export default function HomeScreen(props) {
       recovered: Object.values(historical.recovered).slice(22),
     },
   };
-  console.log(week_data);
+
   const month_data = {
     table: {
       cases:
