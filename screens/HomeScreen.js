@@ -160,7 +160,7 @@ export default function HomeScreen(props) {
               </View>
             ) : (
               <View>
-                <Text>{"There is n graph"}</Text>
+                <Text>{"There is no graph"}</Text>
               </View>
             )}
           </View>
