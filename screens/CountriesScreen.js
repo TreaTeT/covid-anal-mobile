@@ -28,10 +28,23 @@ function CountriesScreen(props) {
   const [modal_data_historical, set_modal_data_historical] = useState({});
   const [modal_data_global, set_modal_data_global] = useState({});
   const [modal_vis, set_modal_vis] = useState(false);
-  const [has_history, set_has_history] = useState(true);
+  const [has_history, set_has_history] = useState(false);
   const [country_flag, set_country_flag] = useState(
     "https://disease.sh/assets/img/flags/af.png"
   );
+
+  const [select_data, set_select_data] = useState({
+    table: {
+      cases: 0,
+      deaths: 0,
+      recovered: 0,
+    },
+    graph: {
+      cases: [0, 0, 0],
+      deaths: [0, 0, 0],
+      recovered: [0, 0, 0],
+    },
+  });
 
   const getHistoricalData = (iso2) => {
     let link = `https://disease.sh/v3/covid-19/historical/${iso2}`;
@@ -87,6 +100,7 @@ function CountriesScreen(props) {
       <Modal
         onBackdropPress={() => {
           set_modal_vis(!modal_vis);
+          set_has_history(false);
         }}
         isVisible={modal_vis}
         style={{ margin: 0, padding: 0 }}
@@ -116,14 +130,47 @@ function CountriesScreen(props) {
             </View>
 
             {has_history === true ? (
-              <View
-                style={{
-                  alignSelf: "center",
-                  position: "absolute",
-                  top: hp("60%"),
-                }}
-              >
-                <Text>HAS HISTORY</Text>
+              <View>
+                <View
+                  style={{
+                    alignSelf: "center",
+                    position: "absolute",
+                    top: hp("-70%"),
+                  }}
+                >
+                  <SelectComponent
+                    today={() => {
+                      set_select_data({
+                        table: {
+                          cases: modal_data_global.todayCases,
+                          deaths: modal_data_global.todayDeaths,
+                          recovered: modal_data_global.todayRecovered,
+                        },
+                      });
+                    }}
+                    week={() => {
+                      set_select_data(modal_data_historical.weekData);
+                    }}
+                    month={() => {
+                      set_select_data(modal_data_historical.monthData);
+                    }}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    alignSelf: "center",
+
+                    top: hp("-60%"),
+                  }}
+                >
+                  <TableDataComponent
+                    headline={"Affected people"}
+                    row1={select_data.table.cases}
+                    row2={select_data.table.deaths}
+                    row3={select_data.table.recovered}
+                  />
+                </View>
               </View>
             ) : (
               <View>
@@ -169,6 +216,14 @@ function CountriesScreen(props) {
             onPress={() => {
               set_modal_data_global(item);
               set_modal_vis(!modal_vis);
+              set_select_data({
+                table: {
+                  cases: item.todayCases,
+                  deaths: item.todayDeaths,
+                  recovered: item.todayRecovered,
+                },
+              });
+
               set_country_flag(item.countryInfo.flag);
               getHistoricalData(item.countryInfo.iso2);
             }}
