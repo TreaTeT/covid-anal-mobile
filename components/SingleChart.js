@@ -27,7 +27,16 @@ const SingleChart = (props) => {
           data={props.data}
           //y={(d) => d / 1000000}
         />
-        <VictoryAxis dependentAxis tickFormat={(x) => `${x / 1000000}M`} />
+        <VictoryAxis
+          dependentAxis
+          tickFormat={(x) => {
+            if (x > 999999) {
+              return `${x / 1000000}M`;
+            } else if (x <= 999999 && x > 999) {
+              return `${x / 1000}k`;
+            }
+          }}
+        />
         {/* <VictoryAxis dependentAxis /> */}
       </VictoryChart>
     </View>
