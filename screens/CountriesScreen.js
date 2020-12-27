@@ -14,6 +14,7 @@ import SelectComponent from "../components/SelectComponent";
 import TableDataComponent from "../components/TableData";
 import AdditionalDataComponent from "../components/AdditionalDataComponent";
 import SingleChart from "../components/SingleChart";
+import Loading from "../components/Loading";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -47,6 +48,7 @@ function CountriesScreen(props) {
     },
   });
   const [display_graph, set_display_graph] = useState(false);
+  const [ready, set_ready] = useState(false);
 
   const getHistoricalData = (iso2) => {
     let link = `https://disease.sh/v3/covid-19/historical/${iso2}`;
@@ -95,7 +97,9 @@ function CountriesScreen(props) {
           set_has_history(false);
         }
       })
-      .then(() => {});
+      .then(() => {
+        set_ready(true);
+      });
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -103,149 +107,158 @@ function CountriesScreen(props) {
         onBackdropPress={() => {
           set_modal_vis(!modal_vis);
           set_has_history(false);
+          set_ready(false);
         }}
         isVisible={modal_vis}
         style={{ margin: 0, padding: 0 }}
         propagateSwipe={true}
       >
         {/* MODAL CONTENT */}
-
-        <ScrollView style={{ top: hp("20%") }}>
-          <View
-            style={
-              display_graph
-                ? styles.modal_container
-                : [styles.modal_container, { height: hp("190%") }]
-            }
-          >
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <Image source={{ uri: country_flag }} style={styles.flag}></Image>
-              <Text style={styles.country}>{modal_data_global.country}</Text>
-            </View>
-
+        {ready ? (
+          <ScrollView style={{ top: hp("20%") }}>
             <View
-              style={{
-                alignSelf: "center",
-                position: "absolute",
-                top: hp("20%"),
-              }}
+              style={
+                display_graph
+                  ? styles.modal_container
+                  : [styles.modal_container, { height: hp("190%") }]
+              }
             >
-              <BasicDataComponent
-                cases={modal_data_global.cases}
-                deaths={modal_data_global.deaths}
-                recovered={modal_data_global.recovered}
-              />
+              <View style={{ flex: 1, flexDirection: "row" }}>
+                <Image
+                  source={{ uri: country_flag }}
+                  style={styles.flag}
+                ></Image>
+                <Text style={styles.country}>{modal_data_global.country}</Text>
+              </View>
+
+              <View
+                style={{
+                  alignSelf: "center",
+                  position: "absolute",
+                  top: hp("20%"),
+                }}
+              >
+                <BasicDataComponent
+                  cases={modal_data_global.cases}
+                  deaths={modal_data_global.deaths}
+                  recovered={modal_data_global.recovered}
+                />
+              </View>
+
+              {has_history === true ? (
+                <View>
+                  <View
+                    style={{
+                      alignSelf: "center",
+                      position: "absolute",
+                      top: display_graph ? hp("-60%") : hp("-50%"),
+                    }}
+                  >
+                    <SelectComponent
+                      today={() => {
+                        set_select_data({
+                          table: {
+                            cases: modal_data_global.todayCases,
+                            deaths: modal_data_global.todayDeaths,
+                            recovered: modal_data_global.todayRecovered,
+                          },
+                        });
+                        set_display_graph(false);
+                      }}
+                      week={() => {
+                        set_select_data(modal_data_historical.weekData);
+                        set_display_graph(true);
+                      }}
+                      month={() => {
+                        set_select_data(modal_data_historical.monthData);
+                        set_display_graph(true);
+                      }}
+                    />
+                  </View>
+
+                  <View
+                    style={{
+                      alignSelf: "center",
+
+                      top: display_graph ? hp("-50%") : hp("-40%"),
+                    }}
+                  >
+                    <TableDataComponent
+                      headline={"Affected people"}
+                      row1={select_data.table.cases}
+                      row2={select_data.table.deaths}
+                      row3={select_data.table.recovered}
+                    />
+                  </View>
+
+                  <View
+                    style={{
+                      alignSelf: "center",
+                      top: display_graph ? hp("-43%") : hp("-33%"),
+                    }}
+                  >
+                    <AdditionalDataComponent data={modal_data_global} />
+                  </View>
+
+                  <View style={{ alignSelf: "center", top: hp("-30%") }}>
+                    {display_graph ? (
+                      <View>
+                        <Text style={styles.chart_title}>Cases</Text>
+                        <SingleChart
+                          data={select_data.graph.cases}
+                          color={"#04B83F"}
+                        />
+                        <Text style={styles.chart_title}>Deaths</Text>
+                        <SingleChart
+                          data={select_data.graph.deaths}
+                          color={"#F74141"}
+                        />
+                        <Text style={styles.chart_title}>Cured</Text>
+                        <SingleChart
+                          data={select_data.graph.recovered}
+                          color={"#3C89F1"}
+                        />
+                      </View>
+                    ) : (
+                      <View>
+                        <Text>{"There is no graph"}</Text>
+                      </View>
+                    )}
+                  </View>
+                </View>
+              ) : (
+                <View>
+                  <View
+                    style={{
+                      alignSelf: "center",
+                      top: hp("-30%"),
+                    }}
+                  >
+                    <TableDataComponent
+                      headline={"Today"}
+                      row1={modal_data_global.todayCases}
+                      row2={modal_data_global.todayDeaths}
+                      row3={modal_data_global.todayRecovered}
+                    />
+                  </View>
+
+                  <View
+                    style={{
+                      alignSelf: "center",
+                      top: hp("-25%"),
+                    }}
+                  >
+                    <AdditionalDataComponent data={modal_data_global} />
+                  </View>
+                </View>
+              )}
             </View>
-
-            {has_history === true ? (
-              <View>
-                <View
-                  style={{
-                    alignSelf: "center",
-                    position: "absolute",
-                    top: display_graph ? hp("-60%") : hp("-50%"),
-                  }}
-                >
-                  <SelectComponent
-                    today={() => {
-                      set_select_data({
-                        table: {
-                          cases: modal_data_global.todayCases,
-                          deaths: modal_data_global.todayDeaths,
-                          recovered: modal_data_global.todayRecovered,
-                        },
-                      });
-                      set_display_graph(false);
-                    }}
-                    week={() => {
-                      set_select_data(modal_data_historical.weekData);
-                      set_display_graph(true);
-                    }}
-                    month={() => {
-                      set_select_data(modal_data_historical.monthData);
-                      set_display_graph(true);
-                    }}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    alignSelf: "center",
-
-                    top: display_graph ? hp("-50%") : hp("-40%"),
-                  }}
-                >
-                  <TableDataComponent
-                    headline={"Affected people"}
-                    row1={select_data.table.cases}
-                    row2={select_data.table.deaths}
-                    row3={select_data.table.recovered}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    alignSelf: "center",
-                    top: display_graph ? hp("-43%") : hp("-33%"),
-                  }}
-                >
-                  <AdditionalDataComponent data={modal_data_global} />
-                </View>
-
-                <View style={{ alignSelf: "center", top: hp("-30%") }}>
-                  {display_graph ? (
-                    <View>
-                      <Text style={styles.chart_title}>Cases</Text>
-                      <SingleChart
-                        data={select_data.graph.cases}
-                        color={"#04B83F"}
-                      />
-                      <Text style={styles.chart_title}>Deaths</Text>
-                      <SingleChart
-                        data={select_data.graph.deaths}
-                        color={"#F74141"}
-                      />
-                      <Text style={styles.chart_title}>Cured</Text>
-                      <SingleChart
-                        data={select_data.graph.recovered}
-                        color={"#3C89F1"}
-                      />
-                    </View>
-                  ) : (
-                    <View>
-                      <Text>{"There is no graph"}</Text>
-                    </View>
-                  )}
-                </View>
-              </View>
-            ) : (
-              <View>
-                <View
-                  style={{
-                    alignSelf: "center",
-                    top: hp("-30%"),
-                  }}
-                >
-                  <TableDataComponent
-                    headline={"Today"}
-                    row1={modal_data_global.todayCases}
-                    row2={modal_data_global.todayDeaths}
-                    row3={modal_data_global.todayRecovered}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    alignSelf: "center",
-                    top: hp("-25%"),
-                  }}
-                >
-                  <AdditionalDataComponent data={modal_data_global} />
-                </View>
-              </View>
-            )}
+          </ScrollView>
+        ) : (
+          <View style={styles.loading_container}>
+            <Loading />
           </View>
-        </ScrollView>
+        )}
 
         {/* END OF MODAL CONTENT */}
       </Modal>
@@ -289,8 +302,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     margin: 0,
   },
+  loading_container: {
+    marginBottom: 0,
+    marginHorizontal: 0,
+    padding: 0,
+    marginTop: hp("10%"),
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    height: hp("85%"),
+    width: wp("100%"),
+    bottom: 0,
+
+    backgroundColor: "#fff",
+  },
   modal_container: {
     marginBottom: 0,
+
     marginHorizontal: 0,
     padding: 0,
 
