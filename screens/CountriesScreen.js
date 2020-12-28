@@ -118,9 +118,11 @@ function CountriesScreen(props) {
           <ScrollView style={{ top: hp("20%") }}>
             <View
               style={
-                display_graph
-                  ? styles.modal_container
-                  : [styles.modal_container, { height: hp("190%") }]
+                has_history
+                  ? display_graph
+                    ? styles.modal_container
+                    : [styles.modal_container, { height: hp("190%") }]
+                  : [styles.modal_container, { height: hp("165%") }]
               }
             >
               <View style={{ flex: 1, flexDirection: "row" }}>
@@ -305,11 +307,11 @@ const styles = StyleSheet.create({
   loading_container: {
     marginBottom: 0,
     marginHorizontal: 0,
-    padding: 0,
-    marginTop: hp("10%"),
+
+    marginTop: hp("20 %"),
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    height: hp("85%"),
+    height: hp("80%"),
     width: wp("100%"),
     bottom: 0,
 

@@ -34,6 +34,8 @@ const SingleChart = (props) => {
               return `${x / 1000000}M`;
             } else if (x <= 999999 && x > 999) {
               return `${x / 1000}k`;
+            } else if (x < 999) {
+              return `${x}`;
             }
           }}
         />
