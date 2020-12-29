@@ -56,8 +56,6 @@ function CountriesScreen(props) {
   const [data, setData] = useState(filtered_data);
   const [auto_focus, set_auto_focus] = useState(true);
 
-  const inputEl = useRef(null);
-
   const getHistoricalData = (iso2) => {
     let link = `https://disease.sh/v3/covid-19/historical/${iso2}`;
 
@@ -124,16 +122,26 @@ function CountriesScreen(props) {
           autoCapitalize="none"
           autoCorrect={false}
           value={query}
-          ref={inputEl}
           autoFocus={auto_focus}
           onChangeText={(queryText) => handleSearch(queryText)}
           placeholder="Search"
           style={{
             backgroundColor: "#fff",
-            paddingHorizontal: 20,
-            paddingVertical: 10,
-            marginTop: 10,
+            paddingHorizontal: wp("5%"),
+            paddingVertical: hp("1.3%"),
+            marginTop: hp("1%"),
             borderWidth: 1,
+            borderColor: "#f9f9f9",
+            borderRadius: 20,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.18,
+            shadowRadius: 1.0,
+
+            elevation: 1,
           }}
         />
       </View>
