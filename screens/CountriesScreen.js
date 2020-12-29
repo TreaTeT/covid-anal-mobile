@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,8 @@ import {
   SafeAreaView,
   Image,
   ScrollView,
+  TextInput,
+  Keyboard,
 } from "react-native";
 import CountryItem from "../components/CountryItem";
 import BasicDataComponent from "../components/BasicData";
@@ -49,6 +51,12 @@ function CountriesScreen(props) {
   });
   const [display_graph, set_display_graph] = useState(false);
   const [ready, set_ready] = useState(false);
+  const [query, setQuery] = useState("");
+  const [fullData, setFullData] = useState(filtered_data);
+  const [data, setData] = useState(filtered_data);
+  const [auto_focus, set_auto_focus] = useState(true);
+
+  const inputEl = useRef(null);
 
   const getHistoricalData = (iso2) => {
     let link = `https://disease.sh/v3/covid-19/historical/${iso2}`;
@@ -101,6 +109,54 @@ function CountriesScreen(props) {
         set_ready(true);
       });
   };
+
+  function renderHeader() {
+    return (
+      <View
+        style={{
+          backgroundColor: "#fff",
+          padding: 10,
+          marginVertical: 10,
+          borderRadius: 20,
+        }}
+      >
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={query}
+          ref={inputEl}
+          autoFocus={auto_focus}
+          onChangeText={(queryText) => handleSearch(queryText)}
+          placeholder="Search"
+          style={{
+            backgroundColor: "#fff",
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            marginTop: 10,
+            borderWidth: 1,
+          }}
+        />
+      </View>
+    );
+  }
+
+  const handleSearch = (text) => {
+    const formattedQuery = text.toLowerCase();
+    const filteredData = fullData.filter((item) => {
+      return contains(item, formattedQuery);
+    });
+    setData(filteredData);
+    setQuery(text);
+  };
+
+  const contains = ({ country }, query) => {
+    let c = country.toLowerCase();
+    if (c.startsWith(query)) {
+      return true;
+    }
+
+    return false;
+  };
   return (
     <SafeAreaView style={styles.container}>
       <Modal
@@ -108,6 +164,7 @@ function CountriesScreen(props) {
           set_modal_vis(!modal_vis);
           set_has_history(false);
           set_ready(false);
+          set_auto_focus(true);
         }}
         isVisible={modal_vis}
         style={{ margin: 0, padding: 0 }}
@@ -265,9 +322,10 @@ function CountriesScreen(props) {
         {/* END OF MODAL CONTENT */}
       </Modal>
       <FlatList
-        data={filtered_data}
+        data={data}
         initialNumToRender={15}
         maxToRenderPerBatch={7}
+        ListHeaderComponent={renderHeader}
         renderItem={({ item }) => (
           <CountryItem
             country={item.country}
@@ -275,6 +333,7 @@ function CountriesScreen(props) {
             id={item.countryInfo._id}
             data={item}
             onPress={() => {
+              set_auto_focus(false);
               set_modal_data_global(item);
               set_modal_vis(!modal_vis);
               set_select_data({
