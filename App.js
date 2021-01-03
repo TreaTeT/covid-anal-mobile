@@ -16,6 +16,7 @@ export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [HS_data, setHS_data] = useState({ data: "data" });
   const [CS_data, setCS_data] = useState([]);
+  const [RS_data, setRS_data] = useState([]);
 
   useEffect(() => {
     // axios
@@ -34,15 +35,17 @@ export default function App() {
         axios.get("https://disease.sh/v3/covid-19/all", {}),
         axios.get("https://disease.sh/v3/covid-19/historical/all", {}),
         axios.get("https://disease.sh/v3/covid-19/countries", {}),
+        axios.get("https://disease.sh/v3/covid-19/continents", {}),
       ])
       .then(
-        axios.spread((data1, data2, data3) => {
+        axios.spread((data1, data2, data3, data4) => {
           setHS_data({
             global: data1.data,
             historical: data2.data,
           });
 
           setCS_data(data3);
+          setRS_data(data4);
         })
       )
       .catch((errors) => {
@@ -132,7 +135,7 @@ export default function App() {
           <Tab.Screen
             name="Regions"
             options={{ title: "" }}
-            children={() => <RegionsScreen />}
+            children={() => <RegionsScreen data={RS_data} />}
           />
         </Tab.Navigator>
       </NavigationContainer>

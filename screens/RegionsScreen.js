@@ -1,50 +1,38 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import BasicDataComponent from "../components/BasicData";
-import SelectComponent from "../components/SelectComponent";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import RNPickerSelect from "react-native-picker-select";
 
-import {
-  VictoryLine,
-  VictoryChart,
-  VictoryTheme,
-  VictoryAxis,
-} from "victory-native";
-import AdditionalDataComponent from "../components/AdditionalDataComponent";
-export default function RegionsScreen() {
-  let data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-  const DATA = [
-    {
-      id: "10",
-      title: "First Item",
-    },
-    {
-      id: "150",
-      title: "Second Item",
-    },
-    {
-      id: "5149865",
-      title: "Third Item",
-    },
-  ];
+export default function RegionsScreen(props) {
+  const [state, set_state] = useState("");
 
   return (
     <View style={styles.container}>
-      {console.log(data)}
-      <Text>{"This a Regions Screen"}</Text>
-      <AdditionalDataComponent data={DATA} />
-      <Text>There is something</Text>
+      <View
+        style={{
+          borderWidth: 1,
+          width: wp("80%"),
+          borderColor: "gray",
+          borderRadius: 4,
+          color: "black",
+          padding: Platform.OS === "ios" ? 10 : 0,
+        }}
+      >
+        <RNPickerSelect
+          style={{
+            width: wp("80%"),
+          }}
+          itemKey={state}
+          value={state}
+          onValueChange={(value) => set_state(value.toString())}
+          items={props.data.data.map((item) => {
+            return { label: `${item.continent}`, value: `${item.continent}` };
+          })}
+        />
+      </View>
     </View>
   );
 }
