@@ -45,7 +45,7 @@ export default function App() {
           });
 
           setCS_data(data3);
-          setRS_data(data4);
+          setRS_data({ countries: data3, continents: data4 });
         })
       )
       .catch((errors) => {
