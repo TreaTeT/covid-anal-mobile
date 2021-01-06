@@ -57,7 +57,15 @@ const AdditionalDataComponent = (props) => {
         <Text style={styles.text}>{"Tests per one mil."}</Text>
         <View style={styles.number_container}>
           <Text style={styles.number}>
-            {formatNumber(data.testsPerOneMillion)}
+            {data.testsPerOneMillion
+              ? formatNumber(data.testsPerOneMillion)
+              : formatNumber(
+                  Math.round(
+                    ((data.tests / (data.population / 100)) * 10000 +
+                      Number.EPSILON) *
+                      100
+                  ) / 100
+                )}
           </Text>
         </View>
       </View>
@@ -66,7 +74,15 @@ const AdditionalDataComponent = (props) => {
         <Text style={styles.text}>{"Cases per one mil."}</Text>
         <View style={styles.number_container}>
           <Text style={styles.number}>
-            {formatNumber(data.casesPerOneMillion)}
+            {data.casesPerOneMillion
+              ? formatNumber(data.casesPerOneMillion)
+              : formatNumber(
+                  Math.round(
+                    ((data.cases / (data.population / 100)) * 10000 +
+                      Number.EPSILON) *
+                      100
+                  ) / 100
+                )}
           </Text>
         </View>
       </View>
@@ -75,7 +91,15 @@ const AdditionalDataComponent = (props) => {
         <Text style={styles.text}>{"Deaths per one mil."}</Text>
         <View style={styles.number_container}>
           <Text style={styles.number}>
-            {formatNumber(data.deathsPerOneMillion)}
+            {data.testsPerOneMillion
+              ? formatNumber(data.deathsPerOneMillion)
+              : formatNumber(
+                  Math.round(
+                    ((data.deaths / (data.population / 100)) * 10000 +
+                      Number.EPSILON) *
+                      100
+                  ) / 100
+                )}
           </Text>
         </View>
       </View>

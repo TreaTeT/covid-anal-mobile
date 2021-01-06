@@ -56,7 +56,7 @@ export default function RegionsScreen(props) {
         <ScrollView style={{ top: hp("20%") }}>
           <View style={styles.modal_container}>
             <View style={{ flex: 1 }}>
-              <Text style={styles.country}>{modal_data.continent}</Text>
+              <Text style={styles.header}>{modal_data.continent}</Text>
             </View>
 
             <View
@@ -165,7 +165,34 @@ export default function RegionsScreen(props) {
           >
             <Button
               onPress={() => {
-                // here compute the data from countries
+                if (picked_countries.length > 0) {
+                  let temp = {
+                    cases: 0,
+                    deaths: 0,
+                    recovered: 0,
+                    todayCases: 0,
+                    todayDeaths: 0,
+                    todayRecovered: 0,
+                    active: 0,
+                    critical: 0,
+                    tests: 0,
+                    population: 0,
+                  };
+                  picked_countries.forEach((country) => {
+                    let c = countries.data.filter(
+                      (item) => item.country == country
+                    );
+
+                    for (const property in temp) {
+                      temp[property] += parseInt(c[0][property]);
+                    }
+                  });
+                  set_modal_data(temp);
+                  //set_countries_modal_vis(false);
+                  set_modal_vis(true);
+                } else {
+                  console.log("did not picked any countries");
+                }
               }}
               title={"go"}
             ></Button>
