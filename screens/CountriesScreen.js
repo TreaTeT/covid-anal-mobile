@@ -172,7 +172,7 @@ function CountriesScreen(props) {
           set_modal_vis(!modal_vis);
           set_has_history(false);
           set_ready(false);
-          set_auto_focus(true);
+          set_auto_focus(false);
         }}
         isVisible={modal_vis}
         style={{ margin: 0, padding: 0 }}

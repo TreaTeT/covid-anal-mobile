@@ -7,6 +7,7 @@ import {
   Button,
   ScrollView,
   FlatList,
+  TextInput,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -29,7 +30,7 @@ export default function RegionsScreen(props) {
   });
 
   pickerItems.push({ label: "Custom region", value: "custom", key: "custom" });
-  const axios = require("axios");
+
   const [select_value, set_select_value] = useState("Europe");
   const [modal_data, set_modal_data] = useState({});
   const [modal_vis, set_modal_vis] = useState(false);
@@ -41,6 +42,67 @@ export default function RegionsScreen(props) {
       item.country !== "Diamond Princess" && item.country !== "MS Zaandam"
   );
   const [countries_data, set_countries_data] = useState(filtered_data);
+  const [query, setQuery] = useState("");
+  const [auto_focus, set_auto_focus] = useState(true);
+  const [fullData, setFullData] = useState(filtered_data);
+
+  function renderHeader() {
+    return (
+      <View
+        style={{
+          backgroundColor: "#fff",
+          padding: 10,
+          marginVertical: 10,
+          borderRadius: 20,
+        }}
+      >
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          value={query}
+          autoFocus={auto_focus}
+          onChangeText={(queryText) => handleSearch(queryText)}
+          placeholder="Search"
+          style={{
+            backgroundColor: "#fff",
+            paddingHorizontal: wp("5%"),
+            paddingVertical: hp("1.3%"),
+            marginTop: hp("1%"),
+            borderWidth: 1,
+            borderColor: "#f9f9f9",
+            borderRadius: 20,
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.18,
+            shadowRadius: 1.0,
+
+            elevation: 1,
+          }}
+        />
+      </View>
+    );
+  }
+
+  const handleSearch = (text) => {
+    const formattedQuery = text.toLowerCase();
+    const filteredData = fullData.filter((item) => {
+      return contains(item, formattedQuery);
+    });
+
+    set_countries_data(filteredData);
+    setQuery(text);
+  };
+
+  const contains = ({ country }, query) => {
+    let c = country.toLowerCase();
+    if (c.startsWith(query)) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <View style={styles.container}>
@@ -105,6 +167,7 @@ export default function RegionsScreen(props) {
       <Modal
         onBackdropPress={() => {
           set_countries_modal_vis(!countries_modal_vis);
+          set_auto_focus(false);
         }}
         isVisible={countries_modal_vis}
         style={{ margin: 0, padding: 0 }}
@@ -114,13 +177,12 @@ export default function RegionsScreen(props) {
           <View style={{ flex: 1, top: hp("-5%") }}>
             <Text style={styles.header}>{`Pick your countries`}</Text>
           </View>
-
-          <View style={{ margin: 10, height: hp("45%") }}>
+          <View style={{ margin: 10, height: hp("46%") }}>
             <FlatList
               data={countries_data}
               initialNumToRender={15}
               maxToRenderPerBatch={7}
-              //ListHeaderComponent={renderHeader}
+              ListHeaderComponent={renderHeader}
               renderItem={({ item }) => {
                 return (
                   <Text
@@ -135,6 +197,7 @@ export default function RegionsScreen(props) {
                         : "#3d3a3a",
                     }}
                     onPress={() => {
+                      set_auto_focus(false);
                       if (picked_countries.includes(item.country)) {
                         set_picked_countries(
                           picked_countries.filter(
@@ -153,7 +216,7 @@ export default function RegionsScreen(props) {
                   </Text>
                 );
               }}
-              keyExtractor={(item) => item.countryInfo._id.toString()}
+              keyExtractor={(item) => item.country}
             />
           </View>
           <View
@@ -299,7 +362,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    height: hp("70%"),
+    height: hp("60%"),
     width: wp("90%"),
     backgroundColor: "#fff",
   },
