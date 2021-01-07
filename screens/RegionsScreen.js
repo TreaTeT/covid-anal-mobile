@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -18,6 +18,8 @@ import Modal from "react-native-modal";
 import BasicDataComponent from "../components/BasicData";
 import TableDataComponent from "../components/TableData";
 import AdditionalDataComponent from "../components/AdditionalDataComponent";
+import DialogInput from "react-native-dialog-input";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function RegionsScreen(props) {
   let { countries, continents } = props.data;
@@ -46,6 +48,10 @@ export default function RegionsScreen(props) {
   const [auto_focus, set_auto_focus] = useState(true);
   const [fullData, setFullData] = useState(filtered_data);
 
+  const [dialog_vis, set_dialog_vis] = useState(false);
+  const [keys, set_keys] = useState([]);
+  const [current_key, set_current_key] = useState("");
+
   function renderHeader() {
     return (
       <View
@@ -60,7 +66,7 @@ export default function RegionsScreen(props) {
           autoCapitalize="none"
           autoCorrect={false}
           value={query}
-          autoFocus={auto_focus}
+          //autoFocus={auto_focus}
           onChangeText={(queryText) => handleSearch(queryText)}
           placeholder="Search"
           style={{
@@ -104,12 +110,64 @@ export default function RegionsScreen(props) {
     return false;
   };
 
+  useEffect(() => {
+    getKeys();
+  }, []);
+
+  const storeData = async (key, value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem(key, jsonValue);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getData = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+
+      if (value !== null) {
+        set_modal_data(JSON.parse(value));
+        set_modal_vis(!modal_vis);
+        getKeys();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const removeData = async (key) => {
+    try {
+      await AsyncStorage.removeItem(key);
+      getKeys();
+    } catch (e) {
+      console.log(e);
+    }
+    console.log("removed");
+  };
+
+  // place for function to get all the keys
+
+  const getKeys = async () => {
+    try {
+      let keys = await AsyncStorage.getAllKeys();
+      keys = keys.map((item) => {
+        return { save: item };
+      });
+      set_keys(keys);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* MODAL FOR SHOWING DATA CONTENT */}
       <Modal
         onBackdropPress={() => {
           set_modal_vis(!modal_vis);
+          set_current_key("");
         }}
         isVisible={modal_vis}
         style={{ margin: 0, padding: 0 }}
@@ -117,10 +175,54 @@ export default function RegionsScreen(props) {
       >
         <ScrollView style={{ top: hp("20%") }}>
           <View style={styles.modal_container}>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.header}>{modal_data.continent}</Text>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.header}>
+                {modal_data.continent
+                  ? modal_data.continent
+                  : current_key.length > 0
+                  ? current_key
+                  : "Custom region"}
+              </Text>
+              {current_key.length === 0 ? (
+                <View style={{ width: wp("17%"), margin: wp("3%") }}>
+                  <Button
+                    onPress={() => {
+                      set_dialog_vis(!dialog_vis);
+                    }}
+                    title={"save"}
+                  ></Button>
+                </View>
+              ) : (
+                <View></View>
+              )}
             </View>
 
+            {/* DIALOG */}
+
+            <DialogInput
+              isDialogVisible={dialog_vis}
+              title={"Save Region"}
+              message={"Please enter a name for your custom region."}
+              hintInput={"save1"}
+              submitInput={(inputText) => {
+                storeData(inputText, modal_data);
+                getData(inputText);
+                set_dialog_vis(!dialog_vis);
+                set_modal_vis(!modal_vis);
+                set_countries_modal(!countries_modal_vis);
+              }}
+              closeDialog={() => {
+                getData("a");
+                set_dialog_vis(!dialog_vis);
+              }}
+            ></DialogInput>
+
+            {/* DIALOG */}
             <View
               style={{
                 alignSelf: "center",
@@ -167,7 +269,7 @@ export default function RegionsScreen(props) {
       <Modal
         onBackdropPress={() => {
           set_countries_modal_vis(!countries_modal_vis);
-          set_auto_focus(false);
+          set_auto_focus(true);
         }}
         isVisible={countries_modal_vis}
         style={{ margin: 0, padding: 0 }}
@@ -197,7 +299,7 @@ export default function RegionsScreen(props) {
                         : "#3d3a3a",
                     }}
                     onPress={() => {
-                      set_auto_focus(false);
+                      set_auto_focus(true);
                       if (picked_countries.includes(item.country)) {
                         set_picked_countries(
                           picked_countries.filter(
@@ -251,8 +353,8 @@ export default function RegionsScreen(props) {
                     }
                   });
                   set_modal_data(temp);
-                  //set_countries_modal_vis(false);
                   set_modal_vis(true);
+                  set_picked_countries([]);
                 } else {
                   console.log("did not picked any countries");
                 }
@@ -315,6 +417,58 @@ export default function RegionsScreen(props) {
           title={"GO!"}
         ></Button>
       </View>
+      <View style={{ height: hp("20%"), width: wp("80%") }}>
+        <FlatList
+          data={keys}
+          renderItem={({ item }) => {
+            return (
+              <View
+                style={{
+                  backgroundColor: "#394048",
+                  borderRadius: 5,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  margin: wp("0.5%"),
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: "RobotoRegular",
+                    fontSize: wp("5%"),
+                    paddingTop: hp("1%"),
+                    paddingBottom: hp("1.9%"),
+                    paddingLeft: wp("4%"),
+                    color: "lightgrey",
+                  }}
+                  onPress={() => {
+                    getData(item.save);
+                    set_current_key(item.save);
+                  }}
+                >
+                  {item.save}
+                </Text>
+
+                <Text
+                  style={{
+                    fontFamily: "RobotoRegular",
+                    fontSize: wp("5%"),
+                    paddingTop: hp("1%"),
+                    paddingBottom: hp("1.9%"),
+                    paddingRight: wp("4%"),
+                    color: "white",
+                  }}
+                  onPress={() => {
+                    removeData(item.save);
+                  }}
+                >
+                  {"x"}
+                </Text>
+              </View>
+            );
+          }}
+          keyExtractor={(item) => item.save}
+        ></FlatList>
+      </View>
     </View>
   );
 }
@@ -350,7 +504,6 @@ const styles = StyleSheet.create({
     height: hp("165%"),
     width: wp("100%"),
     bottom: 0,
-
     backgroundColor: "#fff",
   },
   countries_modal_container: {
@@ -376,8 +529,8 @@ const styles = StyleSheet.create({
   },
   header: {
     fontFamily: "RobotoLight",
-    fontSize: wp("5.5%"),
-    marginTop: hp("8.5%"),
+    fontSize: wp("8%"),
+    marginTop: hp("6%"),
     textAlign: "center",
   },
   chart_title: {
