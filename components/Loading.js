@@ -5,11 +5,21 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-export default function Loading() {
+export default function Loading(props) {
   return (
     <View styles={styles.container}>
       <Text style={styles.upperText}>{"COVID ANALYZER"}</Text>
-      <Text style={styles.lowerText}>{"fetching data..."}</Text>
+
+      {!props.errorLoading ? (
+        <Text style={styles.lowerText}>{"fetching data..."}</Text>
+      ) : (
+        <View>
+          <Text style={styles.lowerText}>{`Something's not right...`}</Text>
+          <Text
+            style={styles.lowerText}
+          >{`please check your internet connection`}</Text>
+        </View>
+      )}
     </View>
   );
 }

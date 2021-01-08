@@ -45,12 +45,14 @@ export default function RegionsScreen(props) {
   );
   const [countries_data, set_countries_data] = useState(filtered_data);
   const [query, setQuery] = useState("");
-  const [auto_focus, set_auto_focus] = useState(true);
+
   const [fullData, setFullData] = useState(filtered_data);
 
   const [dialog_vis, set_dialog_vis] = useState(false);
   const [keys, set_keys] = useState([]);
   const [current_key, set_current_key] = useState("");
+  const [check, set_check] = useState(false);
+  const [autoFocus, setAutoFocus] = useState(false);
 
   function renderHeader() {
     return (
@@ -66,9 +68,13 @@ export default function RegionsScreen(props) {
           autoCapitalize="none"
           autoCorrect={false}
           value={query}
-          //autoFocus={auto_focus}
-          onChangeText={(queryText) => handleSearch(queryText)}
+          autoFocus={autoFocus}
+          onChangeText={(queryText) => {
+            handleSearch(queryText);
+            setAutoFocus(true);
+          }}
           placeholder="Search"
+          keyboardAppearance={"dark"}
           style={{
             backgroundColor: "#fff",
             paddingHorizontal: wp("5%"),
@@ -172,6 +178,8 @@ export default function RegionsScreen(props) {
         isVisible={modal_vis}
         style={{ margin: 0, padding: 0 }}
         propagateSwipe={true}
+        animationOutTiming={500}
+        animationInTiming={500}
       >
         <ScrollView style={{ top: hp("20%") }}>
           <View style={styles.modal_container}>
@@ -269,15 +277,26 @@ export default function RegionsScreen(props) {
       <Modal
         onBackdropPress={() => {
           set_countries_modal_vis(!countries_modal_vis);
-          set_auto_focus(true);
         }}
         isVisible={countries_modal_vis}
         style={{ margin: 0, padding: 0 }}
         propagateSwipe={true}
+        animationOutTiming={1000}
+        animationInTiming={1000}
+        onModalHide={() => {
+          if (check) {
+            set_modal_vis(true);
+            set_check(false);
+          } else {
+            console.log("bazinga");
+          }
+        }}
       >
         <View style={styles.countries_modal_container}>
           <View style={{ flex: 1, top: hp("-5%") }}>
-            <Text style={styles.header}>{`Pick your countries`}</Text>
+            <Text
+              style={[styles.header, { fontSize: wp("6.5%") }]}
+            >{`Pick countries`}</Text>
           </View>
           <View style={{ margin: 10, height: hp("46%") }}>
             <FlatList
@@ -299,7 +318,7 @@ export default function RegionsScreen(props) {
                         : "#3d3a3a",
                     }}
                     onPress={() => {
-                      set_auto_focus(true);
+                      setAutoFocus(false);
                       if (picked_countries.includes(item.country)) {
                         set_picked_countries(
                           picked_countries.filter(
@@ -323,9 +342,10 @@ export default function RegionsScreen(props) {
           </View>
           <View
             style={{
-              width: wp("15%"),
+              width: wp("20%"),
               alignSelf: "center",
               marginBottom: hp("0.5%"),
+              padding: Platform.OS === "ios" ? 10 : 0,
             }}
           >
             <Button
@@ -352,9 +372,14 @@ export default function RegionsScreen(props) {
                       temp[property] += parseInt(c[0][property]);
                     }
                   });
+                  set_countries_modal_vis(false);
                   set_modal_data(temp);
-                  set_modal_vis(true);
+                  // set_modal_vis(true);
                   set_picked_countries([]);
+                  setQuery("");
+                  set_check(true);
+
+                  console.log("button pressed");
                 } else {
                   console.log("did not picked any countries");
                 }
@@ -507,7 +532,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   countries_modal_container: {
-    marginBottom: 0,
+    top: Platform.OS === "ios" ? -hp("17%") : 0,
     alignSelf: "center",
     marginHorizontal: 0,
     padding: 0,

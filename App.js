@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image } from "react-native";
+import { Image, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const Tab = createBottomTabNavigator();
@@ -17,6 +17,7 @@ export default function App() {
   const [HS_data, setHS_data] = useState({ data: "data" });
   const [CS_data, setCS_data] = useState([]);
   const [RS_data, setRS_data] = useState([]);
+  const [errorLoading, setErrorLoading] = useState(false);
 
   useEffect(() => {
     // axios
@@ -46,14 +47,14 @@ export default function App() {
 
           setCS_data(data3);
           setRS_data({ countries: data3, continents: data4 });
+          setLoaded(true);
         })
       )
       .catch((errors) => {
+        setErrorLoading(true);
         console.log(errors);
       })
-      .then(() => {
-        setLoaded(true);
-      });
+      .then(() => {});
   }, []);
 
   /*
@@ -83,7 +84,7 @@ export default function App() {
   });
 
   if (loaded == false || !isLoaded) {
-    return <Loading />;
+    return <Loading errorLoading={errorLoading} />;
   } else {
     return (
       <NavigationContainer>
