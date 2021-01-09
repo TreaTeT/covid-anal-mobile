@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Image, View, Text } from "react-native";
+import { Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-const Tab = createBottomTabNavigator();
 
 import HomeScreen from "./screens/HomeScreen";
 import RegionsScreen from "./screens/RegionsScreen";
@@ -11,26 +10,16 @@ import { useFonts } from "@use-expo/font";
 import Loading from "./components/Loading";
 
 const axios = require("axios");
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
-  const [HS_data, setHS_data] = useState({ data: "data" });
-  const [CS_data, setCS_data] = useState([]);
-  const [RS_data, setRS_data] = useState([]);
+  const [HSData, setHSData] = useState({});
+  const [CSData, setCSData] = useState([]);
+  const [RSData, setRSData] = useState([]);
   const [errorLoading, setErrorLoading] = useState(false);
 
   useEffect(() => {
-    // axios
-    //   .get("https://disease.sh/v3/covid-19/all")
-    //   .then((response) => {
-    //     setHS_data({ global: response.data, historical: "yes yes" });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
-    //   .then(() => {
-    //     setLoaded(true);
-    //   });
     axios
       .all([
         axios.get("https://disease.sh/v3/covid-19/all", {}),
@@ -40,34 +29,23 @@ export default function App() {
       ])
       .then(
         axios.spread((data1, data2, data3, data4) => {
-          setHS_data({
+          setHSData({
             global: data1.data,
             historical: data2.data,
           });
 
-          setCS_data(data3);
-          setRS_data({ countries: data3, continents: data4 });
+          setCSData(data3);
+          setRSData({ countries: data3, continents: data4 });
           setLoaded(true);
         })
       )
       .catch((errors) => {
         setErrorLoading(true);
         console.log(errors);
-      })
-      .then(() => {});
+      });
   }, []);
 
-  /*
-    Axios calls    
-    - [x] request for current global data [app]
-    - [] request for historical data [app]
-    
-    - [] request for countries [app]
-    - [] request for country historical [countries]
-    
-    - [] request for regions (continental) [app]
-    - [] custom request for countries user chooses [regions]
-  */
+  // FONT LOADING
   const [isLoaded] = useFonts({
     RobotoBlack: require("./assets/fonts/RobotoBlack.ttf"),
     RobotoBlackItalic: require("./assets/fonts/RobotoBlackItalic.ttf"),
@@ -126,17 +104,17 @@ export default function App() {
           <Tab.Screen
             name="Home"
             options={{ title: "" }}
-            children={() => <HomeScreen data={HS_data} />}
+            children={() => <HomeScreen data={HSData} />}
           />
           <Tab.Screen
             name="Countries"
             options={{ title: "" }}
-            children={() => <CountriesScreen data={CS_data} />}
+            children={() => <CountriesScreen data={CSData} />}
           />
           <Tab.Screen
             name="Regions"
             options={{ title: "" }}
-            children={() => <RegionsScreen data={RS_data} />}
+            children={() => <RegionsScreen data={RSData} />}
           />
         </Tab.Navigator>
       </NavigationContainer>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, ScrollView, Text, SafeAreaView } from "react-native";
+import { View, StyleSheet, ScrollView, Text } from "react-native";
 import BasicDataComponent from "../components/BasicData";
 import TableDataComponent from "../components/TableData";
 import SelectComponent from "../components/SelectComponent";
@@ -13,7 +13,6 @@ import AdditionalDataComponent from "../components/AdditionalDataComponent";
 
 export default function HomeScreen(props) {
   const { global, historical } = props.data;
-  // console.log(global);
   const { todayCases, todayDeaths, todayRecovered } = global;
   const { cases, deaths, recovered } = global;
 

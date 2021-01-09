@@ -20,6 +20,7 @@ import TableDataComponent from "../components/TableData";
 import AdditionalDataComponent from "../components/AdditionalDataComponent";
 import DialogInput from "react-native-dialog-input";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import TitleComponent from "../components/TitleComponent";
 
 export default function RegionsScreen(props) {
   let { countries, continents } = props.data;
@@ -169,6 +170,7 @@ export default function RegionsScreen(props) {
 
   return (
     <View style={styles.container}>
+      <TitleComponent title={"Regions"} />
       {/* MODAL FOR SHOWING DATA CONTENT */}
       <Modal
         onBackdropPress={() => {
