@@ -224,7 +224,7 @@ export default function RegionsScreen(props) {
                 getData(inputText);
                 set_dialog_vis(!dialog_vis);
                 set_modal_vis(!modal_vis);
-                set_countries_modal(!countries_modal_vis);
+                set_countries_modal_vis(!countries_modal_vis);
               }}
               closeDialog={() => {
                 getData("a");
@@ -274,8 +274,8 @@ export default function RegionsScreen(props) {
           </View>
         </ScrollView>
       </Modal>
-      {/* COUNTRIES MODAL CONTENT */}
 
+      {/* COUNTRIES MODAL CONTENT */}
       <Modal
         onBackdropPress={() => {
           set_countries_modal_vis(!countries_modal_vis);

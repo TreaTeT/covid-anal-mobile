@@ -7,7 +7,7 @@ import {
 
 const Title = (props) => {
   return (
-    <View style={styles.title_view}>
+    <View style={styles.titleView}>
       <Text style={styles.title}>{props.title}</Text>
     </View>
   );
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     fontFamily: "RobotoLight",
     position: "absolute",
   },
-  title_view: {
+  titleView: {
     flex: 1,
     position: "absolute",
     backgroundColor: "white",

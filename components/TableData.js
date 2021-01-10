@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
   dataRow: {
     flex: 1,
     margin: hp("1.80%"),
-    //padding: hp("1.55%"),
     flexDirection: "row",
   },
   dataNames: {

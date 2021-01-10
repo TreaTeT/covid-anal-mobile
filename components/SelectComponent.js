@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
     alignContent: "space-around",
     width: wp("26%"),
     height: hp("4.5%"),
-
     backgroundColor: "#394048",
     marginBottom: 1,
     borderRadius: 7,

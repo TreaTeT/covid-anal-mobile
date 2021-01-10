@@ -7,55 +7,38 @@ import {
 
 const AdditionalDataComponent = (props) => {
   const data = props.data;
+
+  // format number 69420 = 69,420
   let formatNumber = (num) => {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   };
-  // const renderItem = ({ item }) => (
-  //   <Item title={item.title} data={formatNumber(item.data)} />
-  // );
-
-  // const Item = ({ title, data }) => (
-  //   <View style={styles.item}>
-  //     <Text style={styles.text}>{title}</Text>
-  //     <View style={styles.number_container}>
-  //       <Text style={styles.number}>{data}</Text>
-  //     </View>
-  //   </View>
-  // );
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <FlatList
-        data={props.data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.data.toString()}
-      /> 
-  */}
-
       <View style={styles.item}>
         <Text style={styles.text}>{"Active"}</Text>
-        <View style={styles.number_container}>
+        <View style={styles.numberContainer}>
           <Text style={styles.number}>{formatNumber(data.active)}</Text>
         </View>
       </View>
 
       <View style={styles.item}>
         <Text style={styles.text}>{"Critical"}</Text>
-        <View style={styles.number_container}>
+        <View style={styles.numberContainer}>
           <Text style={styles.number}>{formatNumber(data.critical)}</Text>
         </View>
       </View>
 
       <View style={styles.item}>
         <Text style={styles.text}>{"Tests"}</Text>
-        <View style={styles.number_container}>
+        <View style={styles.numberContainer}>
           <Text style={styles.number}>{formatNumber(data.tests)}</Text>
         </View>
       </View>
 
       <View style={styles.item}>
         <Text style={styles.text}>{"Tests per one mil."}</Text>
-        <View style={styles.number_container}>
+        <View style={styles.numberContainer}>
           <Text style={styles.number}>
             {data.testsPerOneMillion
               ? formatNumber(data.testsPerOneMillion)
@@ -72,7 +55,7 @@ const AdditionalDataComponent = (props) => {
 
       <View style={styles.item}>
         <Text style={styles.text}>{"Cases per one mil."}</Text>
-        <View style={styles.number_container}>
+        <View style={styles.numberContainer}>
           <Text style={styles.number}>
             {data.casesPerOneMillion
               ? formatNumber(data.casesPerOneMillion)
@@ -89,7 +72,7 @@ const AdditionalDataComponent = (props) => {
 
       <View style={styles.item}>
         <Text style={styles.text}>{"Deaths per one mil."}</Text>
-        <View style={styles.number_container}>
+        <View style={styles.numberContainer}>
           <Text style={styles.number}>
             {data.testsPerOneMillion
               ? formatNumber(data.deathsPerOneMillion)
@@ -136,7 +119,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
 
-  number_container: {
+  numberContainer: {
     paddingVertical: wp("0.5%"),
     paddingHorizontal: wp("3.5%"),
     height: hp("3.5%"),

@@ -16,20 +16,20 @@ export default function HomeScreen(props) {
   const { todayCases, todayDeaths, todayRecovered } = global;
   const { cases, deaths, recovered } = global;
 
-  const today_data = {
+  const todayData = {
     table: {
       cases: todayCases,
       deaths: todayDeaths,
       recovered: todayRecovered,
     },
     graph: {
-      cases: [todayCases],
+      cases: todayCases,
       deaths: todayDeaths,
       recovered: todayRecovered,
     },
   };
 
-  const week_data = {
+  const weekData = {
     table: {
       cases:
         Object.values(historical.cases)[29] -
@@ -48,7 +48,7 @@ export default function HomeScreen(props) {
     },
   };
 
-  const month_data = {
+  const monthData = {
     table: {
       cases:
         Object.values(historical.cases)[29] -
@@ -67,16 +67,17 @@ export default function HomeScreen(props) {
     },
   };
 
-  const [select_data, set_select_data] = useState(today_data);
-  const [display_graph, set_display_graph] = useState(false);
+  const [selectData, setSelectData] = useState(todayData);
+  const [displayGraph, setDisplayGraph] = useState(false);
+
   return (
     <View>
       <TitleComponent title={"Statistics"} />
 
-      <ScrollView style={{ marginTop: hp("10%") }}>
+      <ScrollView style={styles.scrollview}>
         <View
           style={
-            display_graph
+            displayGraph
               ? styles.container
               : [styles.container, { height: hp("190%") }]
           }
@@ -92,16 +93,16 @@ export default function HomeScreen(props) {
           <View style={styles.selectComponent}>
             <SelectComponent
               today={() => {
-                set_select_data(today_data);
-                set_display_graph(false);
+                setSelectData(todayData);
+                setDisplayGraph(false);
               }}
               week={() => {
-                set_select_data(week_data);
-                set_display_graph(true);
+                setSelectData(weekData);
+                setDisplayGraph(true);
               }}
               month={() => {
-                set_select_data(month_data);
-                set_display_graph(true);
+                setSelectData(monthData);
+                setDisplayGraph(true);
               }}
             />
           </View>
@@ -109,30 +110,17 @@ export default function HomeScreen(props) {
           <View style={styles.tableDataComponent}>
             <TableDataComponent
               headline={"Affected people"}
-              row1={select_data.table.cases}
-              row2={select_data.table.deaths}
-              row3={select_data.table.recovered}
+              row1={selectData.table.cases}
+              row2={selectData.table.deaths}
+              row3={selectData.table.recovered}
             />
           </View>
 
           <View style={{ top: hp("42.5%") }}>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: wp("4%"),
-                fontFamily: "RobotoRegular",
-              }}
-            >
+            <Text style={styles.countriesAffectedHeadline}>
               {"Countries Affected"}
             </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: wp("5.5%"),
-                fontFamily: "RobotoBlack",
-                color: "#ff2626",
-              }}
-            >
+            <Text style={styles.countriesAffectedNumber}>
               {global.affectedCountries}
             </Text>
           </View>
@@ -142,24 +130,23 @@ export default function HomeScreen(props) {
           </View>
 
           <View style={styles.chartDataComponent}>
-            {display_graph ? (
+            {displayGraph ? (
               <View>
-                <Text style={styles.chart_title}>Cases</Text>
-                <SingleChart data={select_data.graph.cases} color={"#04B83F"} />
-                <Text style={styles.chart_title}>Deaths</Text>
+                <Text style={styles.chartTitle}>Cases</Text>
+                <SingleChart data={selectData.graph.cases} color={"#04B83F"} />
+                <Text style={styles.chartTitle}>Deaths</Text>
+                <SingleChart data={selectData.graph.deaths} color={"#F74141"} />
+                <Text style={styles.chartTitle}>Cured</Text>
                 <SingleChart
-                  data={select_data.graph.deaths}
-                  color={"#F74141"}
-                />
-                <Text style={styles.chart_title}>Cured</Text>
-                <SingleChart
-                  data={select_data.graph.recovered}
+                  data={selectData.graph.recovered}
                   color={"#3C89F1"}
                 />
               </View>
             ) : (
               <View>
-                <Text>{"There is no graph"}</Text>
+                <Text style={styles.graphsWarning}>
+                  {"Unable to draw graphs for Today's data"}
+                </Text>
               </View>
             )}
           </View>
@@ -197,7 +184,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     top: hp("50%"),
   },
-  chart_title: {
+  chartTitle: {
     textAlign: "center",
     margin: wp("3%"),
     fontFamily: "RobotoLight",
@@ -206,5 +193,23 @@ const styles = StyleSheet.create({
   },
   additionalDataComponent: {
     top: hp("45%"),
+  },
+  countriesAffectedHeadline: {
+    textAlign: "center",
+    fontSize: wp("4%"),
+    fontFamily: "RobotoRegular",
+  },
+  countriesAffectedNumber: {
+    textAlign: "center",
+    fontSize: wp("5.5%"),
+    fontFamily: "RobotoBlack",
+    color: "#ff2626",
+  },
+  graphsWarning: {
+    fontFamily: "RobotoItalic",
+    fontSize: wp("3%"),
+  },
+  scrollview: {
+    marginTop: hp("10%"),
   },
 });
