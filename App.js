@@ -41,6 +41,7 @@ export default function App() {
       )
       .catch((errors) => {
         setErrorLoading(true);
+        0;
         console.log(errors);
       });
   }, []);

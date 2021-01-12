@@ -224,7 +224,7 @@ export default function RegionsScreen(props) {
                 getData(inputText);
                 set_dialog_vis(!dialog_vis);
                 set_modal_vis(!modal_vis);
-                set_countries_modal_vis(!countries_modal_vis);
+                set_countries_modal_vis(false);
               }}
               closeDialog={() => {
                 getData("a");
@@ -444,7 +444,7 @@ export default function RegionsScreen(props) {
           title={"GO!"}
         ></Button>
       </View>
-      <View style={{ height: hp("20%"), width: wp("80%") }}>
+      <View style={{ height: hp("40%"), width: wp("80%") }}>
         <FlatList
           data={keys}
           renderItem={({ item }) => {
@@ -452,7 +452,7 @@ export default function RegionsScreen(props) {
               <View
                 style={{
                   backgroundColor: "#394048",
-                  borderRadius: 5,
+                  borderRadius: 3,
                   flexDirection: "row",
                   justifyContent: "space-between",
                   margin: wp("0.5%"),
@@ -462,10 +462,10 @@ export default function RegionsScreen(props) {
                   style={{
                     fontFamily: "RobotoRegular",
                     fontSize: wp("5%"),
-                    paddingTop: hp("1%"),
+                    paddingTop: hp("1.2%"),
                     paddingBottom: hp("1.9%"),
                     paddingLeft: wp("4%"),
-                    color: "lightgrey",
+                    color: "lightgray",
                   }}
                   onPress={() => {
                     getData(item.save);
@@ -479,7 +479,7 @@ export default function RegionsScreen(props) {
                   style={{
                     fontFamily: "RobotoRegular",
                     fontSize: wp("5%"),
-                    paddingTop: hp("1%"),
+                    paddingTop: hp("1.2%"),
                     paddingBottom: hp("1.9%"),
                     paddingRight: wp("4%"),
                     color: "white",
