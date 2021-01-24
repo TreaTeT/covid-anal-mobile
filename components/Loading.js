@@ -10,6 +10,7 @@ export default function Loading(props) {
     <View styles={styles.container}>
       <Text style={styles.upperText}>{"COVID ANALYZER"}</Text>
 
+      {/* if there was an erro while loading */}
       {!props.errorLoading ? (
         <Text style={styles.lowerText}>{"fetching data..."}</Text>
       ) : (

@@ -73,7 +73,6 @@ export default function HomeScreen(props) {
   return (
     <View>
       <TitleComponent title={"Statistics"} />
-
       <ScrollView style={styles.scrollview}>
         <View
           style={

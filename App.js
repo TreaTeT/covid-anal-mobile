@@ -14,9 +14,11 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
+  // data for screens
   const [HSData, setHSData] = useState({});
   const [CSData, setCSData] = useState([]);
   const [RSData, setRSData] = useState([]);
+  // error while intial loading
   const [errorLoading, setErrorLoading] = useState(false);
 
   useEffect(() => {
@@ -41,7 +43,6 @@ export default function App() {
       )
       .catch((errors) => {
         setErrorLoading(true);
-        0;
         console.log(errors);
       });
   }, []);
@@ -62,6 +63,7 @@ export default function App() {
     RobotoThinItalic: require("./assets/fonts/RobotoThinItalic.ttf"),
   });
 
+  // if something wrong happened during loading
   if (loaded == false || !isLoaded) {
     return <Loading errorLoading={errorLoading} />;
   } else {
@@ -92,7 +94,7 @@ export default function App() {
                       ? {
                           width: 32,
                           height: 32,
-                          tintColor: "rgba(134, 65, 244, 0.8)",
+                          tintColor: "rgba(15, 140, 250 , 0.8)",
                           top: 7,
                         }
                       : { width: 32, height: 32, tintColor: "gray", top: 7 })

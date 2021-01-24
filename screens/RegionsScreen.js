@@ -24,6 +24,8 @@ import TitleComponent from "../components/TitleComponent";
 
 export default function RegionsScreen(props) {
   let { countries, continents } = props.data;
+
+  // regions for picker
   let pickerItems = continents.data.map((item) => {
     return {
       label: `${item.continent}`,
@@ -31,7 +33,7 @@ export default function RegionsScreen(props) {
       key: `${item.continent}`,
     };
   });
-
+  // add custom region to regions
   pickerItems.push({ label: "Custom region", value: "custom", key: "custom" });
 
   const [select_value, set_select_value] = useState("Europe");
@@ -40,6 +42,7 @@ export default function RegionsScreen(props) {
   const [countries_modal_vis, set_countries_modal_vis] = useState(false);
   const [picked_countries, set_picked_countries] = useState([]);
 
+  // filter out the Diamond Princess and MS Zaandam cruise ships from countries
   const filtered_data = countries.data.filter(
     (item) =>
       item.country !== "Diamond Princess" && item.country !== "MS Zaandam"
@@ -55,6 +58,7 @@ export default function RegionsScreen(props) {
   const [check, set_check] = useState(false);
   const [autoFocus, setAutoFocus] = useState(false);
 
+  // header for countries list where you can pick countries for custom region
   function renderHeader() {
     return (
       <View
@@ -99,6 +103,7 @@ export default function RegionsScreen(props) {
     );
   }
 
+  // functions for searching thru the countries list
   const handleSearch = (text) => {
     const formattedQuery = text.toLowerCase();
     const filteredData = fullData.filter((item) => {
@@ -121,6 +126,7 @@ export default function RegionsScreen(props) {
     getKeys();
   }, []);
 
+  // store data to async
   const storeData = async (key, value) => {
     try {
       const jsonValue = JSON.stringify(value);
@@ -129,7 +135,7 @@ export default function RegionsScreen(props) {
       console.log(e);
     }
   };
-
+  //  get data from async
   const getData = async (key) => {
     try {
       const value = await AsyncStorage.getItem(key);
@@ -143,7 +149,7 @@ export default function RegionsScreen(props) {
       console.log(e);
     }
   };
-
+  // delete data from async
   const removeData = async (key) => {
     try {
       await AsyncStorage.removeItem(key);
@@ -154,8 +160,7 @@ export default function RegionsScreen(props) {
     console.log("removed");
   };
 
-  // place for function to get all the keys
-
+  // get all the keys in async
   const getKeys = async () => {
     try {
       let keys = await AsyncStorage.getAllKeys();
@@ -180,8 +185,8 @@ export default function RegionsScreen(props) {
         isVisible={modal_vis}
         style={{ margin: 0, padding: 0 }}
         propagateSwipe={true}
-        animationOutTiming={500}
-        animationInTiming={500}
+        animationOutTiming={1000}
+        animationInTiming={1000}
       >
         <ScrollView style={{ top: hp("20%") }}>
           <View style={styles.modal_container}>
@@ -233,13 +238,7 @@ export default function RegionsScreen(props) {
             ></DialogInput>
 
             {/* DIALOG */}
-            <View
-              style={{
-                alignSelf: "center",
-                position: "absolute",
-                top: hp("20%"),
-              }}
-            >
+            <View style={styles.basicDataComponent}>
               <BasicDataComponent
                 cases={modal_data.cases}
                 deaths={modal_data.deaths}
@@ -248,12 +247,7 @@ export default function RegionsScreen(props) {
             </View>
 
             <View>
-              <View
-                style={{
-                  alignSelf: "center",
-                  top: hp("-30%"),
-                }}
-              >
+              <View style={styles.tableDataComponent}>
                 <TableDataComponent
                   headline={"Today"}
                   row1={modal_data.todayCases}
@@ -262,12 +256,7 @@ export default function RegionsScreen(props) {
                 />
               </View>
 
-              <View
-                style={{
-                  alignSelf: "center",
-                  top: hp("-25%"),
-                }}
-              >
+              <View style={styles.additionalDataComponent}>
                 <AdditionalDataComponent data={modal_data} />
               </View>
             </View>
@@ -342,14 +331,7 @@ export default function RegionsScreen(props) {
               keyExtractor={(item) => item.country}
             />
           </View>
-          <View
-            style={{
-              width: wp("20%"),
-              alignSelf: "center",
-              marginBottom: hp("0.5%"),
-              padding: Platform.OS === "ios" ? 10 : 0,
-            }}
-          >
+          <View style={styles.pickCountriesButton}>
             <Button
               onPress={() => {
                 if (picked_countries.length > 0) {
@@ -376,14 +358,11 @@ export default function RegionsScreen(props) {
                   });
                   set_countries_modal_vis(false);
                   set_modal_data(temp);
-                  // set_modal_vis(true);
                   set_picked_countries([]);
                   setQuery("");
                   set_check(true);
-
-                  console.log("button pressed");
                 } else {
-                  console.log("did not picked any countries");
+                  console.log("NO countries were picked");
                 }
               }}
               title={"go"}
@@ -392,15 +371,7 @@ export default function RegionsScreen(props) {
         </View>
       </Modal>
 
-      <View
-        style={{
-          borderWidth: 1,
-          width: wp("80%"),
-          borderColor: "#394048",
-          borderRadius: 5,
-          padding: Platform.OS === "ios" ? 10 : 7,
-        }}
-      >
+      <View style={styles.picker}>
         <RNPickerSelect
           style={{ width: wp("80%") }}
           itemKey={select_value}
@@ -419,22 +390,7 @@ export default function RegionsScreen(props) {
           items={pickerItems}
         />
       </View>
-      <View
-        style={{
-          margin: wp("5%"),
-          borderRadius: 5,
-          width: Platform.OS === "ios" ? wp("16%") : wp("12s%"),
-          backgroundColor: "#f7faf8",
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-        }}
-      >
+      <View style={styles.pickRegionButton}>
         <Button
           onPress={() => {
             select_value === "custom"
@@ -449,24 +405,9 @@ export default function RegionsScreen(props) {
           data={keys}
           renderItem={({ item }) => {
             return (
-              <View
-                style={{
-                  backgroundColor: "#394048",
-                  borderRadius: 3,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  margin: wp("0.5%"),
-                }}
-              >
+              <View style={styles.savedRegionContainer}>
                 <Text
-                  style={{
-                    fontFamily: "RobotoRegular",
-                    fontSize: wp("5%"),
-                    paddingTop: hp("1.2%"),
-                    paddingBottom: hp("1.9%"),
-                    paddingLeft: wp("4%"),
-                    color: "lightgray",
-                  }}
+                  style={styles.savedRegionName}
                   onPress={() => {
                     getData(item.save);
                     set_current_key(item.save);
@@ -476,14 +417,7 @@ export default function RegionsScreen(props) {
                 </Text>
 
                 <Text
-                  style={{
-                    fontFamily: "RobotoRegular",
-                    fontSize: wp("5%"),
-                    paddingTop: hp("1.2%"),
-                    paddingBottom: hp("1.9%"),
-                    paddingRight: wp("4%"),
-                    color: "white",
-                  }}
+                  style={styles.removeX}
                   onPress={() => {
                     removeData(item.save);
                   }}
@@ -512,14 +446,12 @@ const styles = StyleSheet.create({
   loading_container: {
     marginBottom: 0,
     marginHorizontal: 0,
-
     marginTop: hp("20 %"),
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     height: hp("80%"),
     width: wp("100%"),
     bottom: 0,
-
     backgroundColor: "#fff",
   },
   modal_container: {
@@ -566,5 +498,68 @@ const styles = StyleSheet.create({
     fontFamily: "RobotoLight",
     fontSize: wp("4.5%"),
     color: "#343434",
+  },
+  removeX: {
+    fontFamily: "RobotoRegular",
+    fontSize: wp("5%"),
+    paddingTop: hp("1.2%"),
+    paddingBottom: hp("1.9%"),
+    paddingRight: wp("4%"),
+    color: "white",
+  },
+  savedRegionName: {
+    fontFamily: "RobotoRegular",
+    fontSize: wp("5%"),
+    paddingTop: hp("1.2%"),
+    paddingBottom: hp("1.9%"),
+    paddingLeft: wp("4%"),
+    color: "lightgray",
+  },
+  savedRegionContainer: {
+    backgroundColor: "#394048",
+    borderRadius: 7,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: wp("0.5%"),
+  },
+  pickRegionButton: {
+    margin: wp("5%"),
+    borderRadius: 5,
+    width: Platform.OS === "ios" ? wp("16%") : wp("12s%"),
+    backgroundColor: "#f7faf8",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  picker: {
+    borderWidth: 1,
+    width: wp("80%"),
+    borderColor: "#394048",
+    borderRadius: 5,
+    padding: Platform.OS === "ios" ? 10 : 7,
+  },
+  pickCountriesButton: {
+    width: wp("20%"),
+    alignSelf: "center",
+    marginBottom: hp("0.5%"),
+    padding: Platform.OS === "ios" ? 10 : 0,
+  },
+  additionalDataComponent: {
+    alignSelf: "center",
+    top: hp("-25%"),
+  },
+  tableDataComponent: {
+    alignSelf: "center",
+    top: hp("-30%"),
+  },
+  basicDataComponent: {
+    alignSelf: "center",
+    position: "absolute",
+    top: hp("20%"),
   },
 });
