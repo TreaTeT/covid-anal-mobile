@@ -36,8 +36,8 @@ export default function RegionsScreen(props) {
   // add custom region to regions
   pickerItems.push({ label: "Custom region", value: "custom", key: "custom" });
 
-  const [select_value, set_select_value] = useState("Europe");
-  const [modal_data, set_modal_data] = useState({});
+  const [select_value, set_select_value] = useState("North America");
+  const [modal_data, set_modal_data] = useState(continents.data[0]);
   const [modal_vis, set_modal_vis] = useState(false);
   const [countries_modal_vis, set_countries_modal_vis] = useState(false);
   const [picked_countries, set_picked_countries] = useState([]);
@@ -49,9 +49,7 @@ export default function RegionsScreen(props) {
   );
   const [countries_data, set_countries_data] = useState(filtered_data);
   const [query, setQuery] = useState("");
-
   const [fullData, setFullData] = useState(filtered_data);
-
   const [dialog_vis, set_dialog_vis] = useState(false);
   const [keys, set_keys] = useState([]);
   const [current_key, set_current_key] = useState("");
@@ -102,6 +100,9 @@ export default function RegionsScreen(props) {
       </View>
     );
   }
+  let formatNumber = (num) => {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  };
 
   // functions for searching thru the countries list
   const handleSearch = (text) => {
@@ -126,7 +127,7 @@ export default function RegionsScreen(props) {
     getKeys();
   }, []);
 
-  // store data to async
+  // store data to async storage
   const storeData = async (key, value) => {
     try {
       const jsonValue = JSON.stringify(value);
@@ -135,7 +136,7 @@ export default function RegionsScreen(props) {
       console.log(e);
     }
   };
-  //  get data from async
+  //  retrieve data from async storage
   const getData = async (key) => {
     try {
       const value = await AsyncStorage.getItem(key);
@@ -149,7 +150,7 @@ export default function RegionsScreen(props) {
       console.log(e);
     }
   };
-  // delete data from async
+  // delete data from async storage
   const removeData = async (key) => {
     try {
       await AsyncStorage.removeItem(key);
@@ -238,12 +239,23 @@ export default function RegionsScreen(props) {
             ></DialogInput>
 
             {/* DIALOG */}
+
             <View style={styles.basicDataComponent}>
               <BasicDataComponent
                 cases={modal_data.cases}
                 deaths={modal_data.deaths}
                 recovered={modal_data.recovered}
               />
+            </View>
+
+            <View style={{ alignSelf: "center", top: hp("2.5%") }}>
+              <Text
+                style={{
+                  fontFamily: "RobotoMedium",
+                  fontSize: hp("2%"),
+                  color: "gray",
+                }}
+              >{`Population: ${formatNumber(modal_data.population)}`}</Text>
             </View>
 
             <View>

@@ -150,6 +150,7 @@ function CountriesScreen(props) {
           setHasHistory(false);
           setReady(false);
           setAutoFocus(true);
+          setDisplayGraph(false);
         }}
         isVisible={modalVis}
         style={{ margin: 0, padding: 0 }}
@@ -258,7 +259,9 @@ function CountriesScreen(props) {
                       </View>
                     ) : (
                       <View>
-                        <Text>{"Unable to draw graphs for Today's data"}</Text>
+                        <Text style={styles.graphsWarning}>
+                          {"Unable to draw graphs for Today's data"}
+                        </Text>
                       </View>
                     )}
                   </View>
@@ -414,6 +417,10 @@ const styles = StyleSheet.create({
   graphsContainer: {
     alignSelf: "center",
     top: hp("-30%"),
+  },
+  graphsWarning: {
+    fontFamily: "RobotoItalic",
+    fontSize: wp("3%"),
   },
 });
 
