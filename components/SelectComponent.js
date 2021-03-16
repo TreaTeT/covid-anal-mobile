@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     height: hp("4.5%"),
     backgroundColor: "#394048",
     marginBottom: 1,
-    borderRadius: 7,
+    borderRadius: 5,
   },
 });
 
