@@ -409,7 +409,7 @@ export default function RegionsScreen(props) {
               ? set_countries_modal_vis(!countries_modal_vis)
               : set_modal_vis(!modal_vis);
           }}
-          title={"GO!"}
+          title={"GO"}
         ></Button>
       </View>
       <View style={{ height: hp("40%"), width: wp("80%") }}>
@@ -514,9 +514,10 @@ const styles = StyleSheet.create({
   removeX: {
     fontFamily: "RobotoRegular",
     fontSize: wp("5%"),
-    paddingTop: hp("1.2%"),
-    paddingBottom: hp("1.9%"),
-    paddingRight: wp("4%"),
+    // paddingTop: hp("1.2%"),
+    // paddingBottom: hp("1.9%"),
+    // paddingRight: wp("4%"),
+    alignSelf: "center",
     color: "#394048",
   },
   savedRegionName: {
