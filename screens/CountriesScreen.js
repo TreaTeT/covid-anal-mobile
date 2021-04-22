@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
   basicDataComponent: {
     alignSelf: "center",
     position: "absolute",
-    top: hp("20%"),
+    top: hp("23%"),
   },
   textInputContainer: {
     backgroundColor: "#fff",

@@ -115,7 +115,7 @@ export default function HomeScreen(props) {
             />
           </View>
 
-          <View style={{ top: hp("42.5%") }}>
+          <View style={{ top: hp("39.5%") }}>
             <Text style={styles.countriesAffectedHeadline}>
               {"Countries Affected"}
             </Text>
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   },
   tableDataComponent: {
     alignSelf: "center",
-    top: hp("38%"),
+    top: hp("32%"),
   },
   chartDataComponent: {
     alignSelf: "center",
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
   },
   chartTitle: {
     textAlign: "center",
-    margin: wp("3%"),
+    margin: wp("5%"),
     fontFamily: "RobotoLight",
     fontSize: wp("4.5%"),
     color: "#343434",

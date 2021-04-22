@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     fontFamily: "RobotoMedium",
     fontSize: wp("4%"),
     color: "#fff",
+    paddingTop: hp("0.35%"),
   },
 
   numberContainer: {

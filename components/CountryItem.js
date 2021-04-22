@@ -10,6 +10,8 @@ const CountryItem = ({ country, ab, id, onPress }) => {
   const handleOnPress = () => {
     onPress();
   };
+
+  //https://www.countryflags.io/${ab}/flat/64.png
   return (
     <TouchableWithoutFeedback style={styles.touchable} onPress={handleOnPress}>
       <View style={styles.container}>
@@ -18,7 +20,7 @@ const CountryItem = ({ country, ab, id, onPress }) => {
             <Image
               style={styles.image}
               source={{
-                uri: `https://www.countryflags.io/${ab}/flat/64.png`,
+                uri: `https://disease.sh/assets/img/flags/${ab.toLowerCase()}.png`,
               }}
             ></Image>
           </View>
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: "100%",
-    borderRadius: 20,
+    borderRadius: 10,
   },
   image_container: {
     marginTop: hp("1%"),

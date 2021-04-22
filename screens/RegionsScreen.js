@@ -170,6 +170,7 @@ export default function RegionsScreen(props) {
       });
       set_keys(keys);
     } catch (e) {
+      countries_moda;
       console.log(e);
     }
   };
@@ -248,7 +249,7 @@ export default function RegionsScreen(props) {
               />
             </View>
 
-            <View style={{ alignSelf: "center", top: hp("2.5%") }}>
+            <View style={{ alignSelf: "center", top: hp(".5%") }}>
               <Text
                 style={{
                   fontFamily: "RobotoMedium",
@@ -480,8 +481,9 @@ const styles = StyleSheet.create({
   countries_modal_container: {
     top: Platform.OS === "ios" ? -hp("17%") : 0,
     alignSelf: "center",
+    marginTop: hp("2%"),
     marginHorizontal: 0,
-    padding: 0,
+    padding: 10,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
@@ -571,7 +573,7 @@ const styles = StyleSheet.create({
   },
   tableDataComponent: {
     alignSelf: "center",
-    top: hp("-30%"),
+    top: hp("-35%"),
   },
   basicDataComponent: {
     alignSelf: "center",
