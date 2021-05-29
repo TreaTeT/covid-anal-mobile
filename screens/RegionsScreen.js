@@ -170,7 +170,6 @@ export default function RegionsScreen(props) {
       });
       set_keys(keys);
     } catch (e) {
-      countries_moda;
       console.log(e);
     }
   };
@@ -573,7 +572,7 @@ const styles = StyleSheet.create({
   },
   tableDataComponent: {
     alignSelf: "center",
-    top: hp("-35%"),
+    top: hp("-33%"),
   },
   basicDataComponent: {
     alignSelf: "center",
